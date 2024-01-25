@@ -42584,9 +42584,66 @@
                 titlecase_mapping: "",
                 symbol: "¦"
             },
+            169: {
+                value: "00A9",
+                name: "COPYRIGHT SIGN",
+                category: "So",
+                class: "0",
+                bidirectional_category: "ON",
+                mapping: "",
+                decimal_digit_value: "",
+                digit_value: "",
+                numeric_value: "",
+                mirrored: "N",
+                unicode_name: "",
+                comment: "",
+                uppercase_mapping: "",
+                lowercase_mapping: "",
+                titlecase_mapping: "",
+                symbol: "©"
             },
+            174: {
+                value: "00AE",
+                name: "REGISTERED SIGN",
+                category: "So",
+                class: "0",
+                bidirectional_category: "ON",
+                mapping: "",
+                decimal_digit_value: "",
+                digit_value: "",
+                numeric_value: "",
+                mirrored: "N",
+                unicode_name: "REGISTERED TRADE MARK SIGN",
+                comment: "",
+                uppercase_mapping: "",
+                lowercase_mapping: "",
+                titlecase_mapping: "",
+                symbol: "®"
+            },
+            176: {
+                value: "00B0",
+                name: "DEGREE SIGN",
+                category: "So",
+                class: "0",
+                bidirectional_category: "ET",
+                mapping: "",
+                decimal_digit_value: "",
+                digit_value: "",
+                numeric_value: "",
+                mirrored: "N",
+                unicode_name: "",
+                comment: "",
+                uppercase_mapping: "",
+                lowercase_mapping: "",
+                titlecase_mapping: "",
+                symbol: "°"
+            },
+            
+           
         }
-    }, function(e, a, i) {
+    },
+	
+	function(e, a, i) {
         "use strict";
 
         function t(e) {
