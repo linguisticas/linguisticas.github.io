@@ -25,7 +25,9 @@
     }, a.o = function(e, a) {
         return Object.prototype.hasOwnProperty.call(e, a)
     }, a.p = "", a(a.s = 507)
-}([function(e, a, i) {
+}
+
+([function(e, a, i) {
         "use strict";
         e.exports = i(100)
     }, function(e, a, i) {
