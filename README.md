@@ -1,3 +1,3 @@
-# react-vis-docs
+# Lingüísticas
 
-Documentation for react-charts. Please refer to [the master branch](https://github.com/uber-common/react-vis) for the library.
+Aquí se consignan los documentos técnicos de la página Lingüísticas.
