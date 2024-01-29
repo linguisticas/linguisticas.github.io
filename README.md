@@ -1,3 +1,3 @@
-# react-vis-docs
+# Linguísticas
 
-Documentation for react-charts. Please refer to [the master branch](https://github.com/uber-common/react-vis) for the library.
+Aquí se reporta el repositorio original. En [gh-pages]([gh-pages](https://github.com/linguisticas/linguisticas.github.io/tree/gh-pages) está la página.
