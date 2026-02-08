@@ -1,0 +1,73 @@
+/* Mercury Text G2 font setup */
+@font-face {
+  font-family: 'Mercury Text G2';
+  src: url('../fonts/MercuryTextG2-Roman-Pro-TD.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Mercury Text G2';
+  src: url('../fonts/MercuryTextG2-Italic-Pro-TD.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Mercury Text G2';
+  src: url('../fonts/MercuryTextG2-Bold-Pro-TD.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Mercury Text G2';
+  src: url('../fonts/MercuryTextG2-BoldItalic-Pro-TD.woff2') format('woff2');
+  font-weight: 700;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Mercury Text G2';
+  src: url('../fonts/MercuryTextG2-Semibold-Pro-TD.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Mercury Text G2';
+  src: url('../fonts/MercuryTextG2-SemiItalic-Pro-TD.woff2') format('woff2');
+  font-weight: 600;
+  font-style: italic;
+}
+
+/* Dedicated blockquote style for NGLE */
+blockquote.ngle {
+  font-family: 'Mercury Text G2', serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 1.5rem;
+  background: #f9f9f9;
+  border-left: 4px solid #007acc;
+  padding: 1em 1.2em;
+  margin: 1em 0;
+  color: #222;
+}
+
+blockquote.ngle cite {
+  font-variant: small-caps;
+  margin-top: 0.5em;
+  color: #555;
+}
+
+/* Dark mode awareness */
+@media (prefers-color-scheme: dark) {
+  blockquote.ngle {
+    background: #1e1e1e;
+    color: #ddd;
+    border-left-color: #66b2ff;
+  }
+  blockquote.ngle cite {
+    color: #ada;
+  }
+}
