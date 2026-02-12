@@ -95,3 +95,7 @@ nav a:hover {
     border-bottom: 2px solid #99ccff;
   }
 }
+
+.versalitas {
+  font-variant: small-caps;
+}
