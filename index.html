@@ -1,324 +1,86 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="robots" content="nofollow,noarchive,noindex">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="generator" content="github.com/gacts/directory-listing"/>
-  <title>Index of /</title>
-  <style>
-:root {
-  --color-text-primary: #444;
-  --color-text-secondary: #111;
-  --color-bg-primary: #ddd;
-  --color-bg-secondary: #bbb;
-}
+    <!-- ĉefa agordo -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lingüísticas</title>
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-text-primary: #bbb;
-    --color-text-secondary: #eee;
-    --color-bg-primary: #242424;
-    --color-bg-secondary: #444;
-  }
-}
+    <!-- bazaj stiloj -->
+    <link rel="stylesheet" href="css/style.css">
 
-html,
-body {
-  margin: 0;
-  padding: 0;
-  background-color: var(--color-bg-primary);
-  color: var(--color-text-primary);
-  font-family: ui-sans-serif, system-ui, sans-serif;
-}
+    <!-- temaj stiloj -->
+    <link rel="stylesheet" href="css/light.css" media="(prefers-color-scheme: light)">
+    <link rel="stylesheet" href="css/dark.css" media="(prefers-color-scheme: dark)">
 
-body {
-  display: flex;
-  flex-direction: column;
-  margin: 2em 1.25em;
-  font-size: 16px;
-}
+    <!-- sintakso-emfazaj temoj -->
+    <link rel="stylesheet" href="css/github.min.css" media="(prefers-color-scheme: light)">
+    <link rel="stylesheet" href="css/github-dark.min.css" media="(prefers-color-scheme: dark)">
 
-@media screen and (max-width: 480px) {
-  body {
-    font-size: 14px;
-  }
-}
+    <!-- matematikaj stiloj -->
+    <link rel="stylesheet" href="css/katex.css">
 
-@media screen and (min-width: 1800px) {
-  body,
-  html {
-    font-size: 20px;
-  }
-}
-
-a {
-  color: var(--color-text-secondary);
-  font-weight: 500;
-  text-decoration: none;
-
-  &:hover {
-    opacity: 0.85;
-    transition: opacity 0.2s linear;
-    text-decoration: underline;
-  }
-
-  &:visited {
-    color: var(--color-text-secondary);
-  }
-}
-
-header,
-main {
-  padding: 0 2rem;
-}
-
-header {
-  margin-bottom: 1rem;
-
-  h1 {
-    display: flex;
-    align-items: center;
-
-    & > span {
-      margin-left: 0.5rem;
-      padding: 0.25rem 0.5rem;
-      border-radius: 4px;
-      font-size: 0.75em;
-      background-color: var(--color-bg-secondary);
-    }
-  }
-}
-
-main {
-  overflow: auto;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-
-  th,
-  td {
-    padding: 1.25rem 1rem;
-    border-bottom: 1px solid var(--color-bg-secondary);
-    text-align: left;
-    white-space: nowrap;
-
-    svg.icon {
-      width: 1em;
-      height: 0.98em;
-      padding-right: 0.1em;
-      position: relative;
-      top: 0.2em;
-    }
-  }
-
-  th.name,
-  td.name {
-    text-align: left;
-  }
-
-  th.size,
-  td.size {
-    width: 10%;
-    text-align: center;
-  }
-
-  th.mod-date,
-  td.mod-date {
-    width: 20%;
-    text-align: center;
-  }
-
-  tbody > tr:last-child > td {
-    border-bottom: none;
-  }
-}
-
-footer {
-  text-align: center;
-  padding: 1rem 0;
-}
-</style>
+    <!-- navigada menuo -->
+    <link rel="stylesheet" href="css/menu.css">
 </head>
+
 <body>
-<header>
-  <h1>Index of <span>/</span></h1>
-</header>
-<svg xmlns="http://www.w3.org/2000/svg" style="display: none">
-  <defs>
-    <symbol id="dir" viewBox="0 0 24 24" fill="currentColor">
-      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-      <path d="M9 3a1 1 0 0 1 .608 .206l.1 .087l2.706 2.707h6.586a3 3 0 0 1 2.995 2.824l.005 .176v8a3 3 0 0 1
-        -2.824 2.995l-.176 .005h-14a3 3 0 0 1 -2.995 -2.824l-.005 -.176v-11a3 3 0 0 1 2.824 -2.995l.176 -.005h4z"/>
-    </symbol>
-    <symbol id="file" viewBox="0 0 24 24" fill="currentColor">
-      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-      <path d="M12 2l.117 .007a1 1 0 0 1 .876 .876l.007 .117v4l.005 .15a2 2 0 0 0 1.838 1.844l.157 .006h4l.117
-        .007a1 1 0 0 1 .876 .876l.007 .117v9a3 3 0 0 1 -2.824 2.995l-.176 .005h-10a3 3 0 0 1 -2.995 -2.824l-.005
-        -.176v-14a3 3 0 0 1 2.824 -2.995l.176 -.005h5z"/>
-      <path d="M19 7h-4l-.001 -4.001z"/>
-    </symbol>
-  </defs>
-</svg>
-<main>
-  <table>
-    <thead>
-      <tr>
-        <th class="name">Name</th>
-        <th class="size">Size</th>
-        <th class="mod-date">Last Modified</th>
-      </tr>
-    </thead>
-    <tbody>
-      
-      
-        <tr>
-          <td class="name">
-            <svg class="icon" xmlns="http://www.w3.org/2000/svg">
-              <use href="#dir"/>
-            </svg>
-            <a href="./tiparoj">tiparoj</a>
-          </td>
-          <td class="size" title="2404456">2.29 MB</td>
-          <td class="mod-date">2/27/2026, 8:44:29 PM</td>
-        </tr>
+    <header>
+        <h1>Lingüísticas</h1>
+        <!-- Hamburger button -->
+        <button class="hamburger" aria-label="Abrir menú">☰</button>
+    </header>
 
-        <tr>
-          <td class="name">
-            <svg class="icon" xmlns="http://www.w3.org/2000/svg">
-              <use href="#dir"/>
-            </svg>
-            <a href="./src">src</a>
-          </td>
-          <td class="size" title="1578">1.54 KB</td>
-          <td class="mod-date">2/27/2026, 8:44:29 PM</td>
-        </tr>
+    <!-- Overlay and sliding panel -->
+    <div class="menu-overlay"></div>
+    <nav class="menu-panel">
+        <ul>
+            <li><a href="index.html">Página principal</a></li>
+            <li><a href="agg/agg.html">Atlas del genoma gramatical</a></li>
+            <li><a href="dokumentoj/README.md">Documentación</a></li>
+            <li><a href="about.html">Acerca del proyecto</a></li>
+            <li><a href="contact.html">Contacto</a></li>
+        </ul>
+    </nav>
 
-        <tr>
-          <td class="name">
-            <svg class="icon" xmlns="http://www.w3.org/2000/svg">
-              <use href="#dir"/>
-            </svg>
-            <a href="./risurcoj">risurcoj</a>
-          </td>
-          <td class="size" title="1152030">1.1 MB</td>
-          <td class="mod-date">2/27/2026, 8:44:29 PM</td>
-        </tr>
+    <main>
+        <section id="intro">
+            <p>Este es el sitio oficial del proyecto <strong>Lingüísticas</strong>. Aquí alojaremos el <i>Atlas</i> y
+                podremos explorar las muchas características que ya tenemos disponibles.</p>
+        </section>
 
-        <tr>
-          <td class="name">
-            <svg class="icon" xmlns="http://www.w3.org/2000/svg">
-              <use href="#dir"/>
-            </svg>
-            <a href="./klerigado">klerigado</a>
-          </td>
-          <td class="size" title="15123">14.77 KB</td>
-          <td class="mod-date">2/27/2026, 8:44:29 PM</td>
-        </tr>
+        <section id="features">
+            <h2>Características</h2>
+            <ul>
+                <li><a href="klerigado/programlingvo.html">Lenguajes de programación</a></li>
+                <li><a href="klerigado/ortografio.html">Ortografía</a></li>
+                <li><a href="klerigado/matematiko.html">Matemáticas</a></li>
+                <li><a href="analisis.html">Análisis de obras gramaticales <strong>(Aún no probar. Sin construir:
+                            404)</strong></a></li>
+                <li><a href="tipografia.html">Tipografía <strong>(Aún no probar. Sin construir: 404)</strong></a>
+                </li>
+            </ul>
+        </section>
 
-        <tr>
-          <td class="name">
-            <svg class="icon" xmlns="http://www.w3.org/2000/svg">
-              <use href="#dir"/>
-            </svg>
-            <a href="./dokumentoj">dokumentoj</a>
-          </td>
-          <td class="size" title="5306">5.18 KB</td>
-          <td class="mod-date">2/27/2026, 8:44:29 PM</td>
-        </tr>
+        <section id="summary">
+            <h2>Resumen</h2>
+            <p>
+                Desde el inicio de esta conversación hemos logrado establecer la infraestructura básica del sitio:
+                integración de <i>Markdown</i> con resaltado de sintaxis y fórmulas matemáticas, estilos temáticos
+                claros para modo claro y oscuro, un menú de navegación accesible con hamburguesa y superposición modal,
+                y la separación entre contenido estático y dinámico para cargar documentos. Todo esto nos acerca a un
+                sistema estable y escalable para el <i>Atlas</i> y el léxico AGG.
+            </p>
+        </section>
+    </main>
 
-        <tr>
-          <td class="name">
-            <svg class="icon" xmlns="http://www.w3.org/2000/svg">
-              <use href="#dir"/>
-            </svg>
-            <a href="./css">css</a>
-          </td>
-          <td class="size" title="37906">37.02 KB</td>
-          <td class="mod-date">2/27/2026, 8:44:29 PM</td>
-        </tr>
+    <footer>
+        <p>&copy; 2026 AEC</p>
+    </footer>
 
-        <tr>
-          <td class="name">
-            <svg class="icon" xmlns="http://www.w3.org/2000/svg">
-              <use href="#dir"/>
-            </svg>
-            <a href="./agg">agg</a>
-          </td>
-          <td class="size" title="5772">5.64 KB</td>
-          <td class="mod-date">2/27/2026, 8:44:29 PM</td>
-        </tr>
-
-        <tr>
-          <td class="name">
-            <svg class="icon" xmlns="http://www.w3.org/2000/svg">
-              <use href="#file"/>
-            </svg>
-            <a href="./rollup.config.js">rollup.config.js</a>
-          </td>
-          <td class="size" title="294">294 B</td>
-          <td class="mod-date">2/27/2026, 8:44:29 PM</td>
-        </tr>
-
-        <tr>
-          <td class="name">
-            <svg class="icon" xmlns="http://www.w3.org/2000/svg">
-              <use href="#file"/>
-            </svg>
-            <a href="./package.json">package.json</a>
-          </td>
-          <td class="size" title="990">990 B</td>
-          <td class="mod-date">2/27/2026, 8:44:29 PM</td>
-        </tr>
-
-        <tr>
-          <td class="name">
-            <svg class="icon" xmlns="http://www.w3.org/2000/svg">
-              <use href="#file"/>
-            </svg>
-            <a href="./package-lock.json">package-lock.json</a>
-          </td>
-          <td class="size" title="220229">215.07 KB</td>
-          <td class="mod-date">2/27/2026, 8:44:29 PM</td>
-        </tr>
-
-        <tr>
-          <td class="name">
-            <svg class="icon" xmlns="http://www.w3.org/2000/svg">
-              <use href="#file"/>
-            </svg>
-            <a href="./linguisticas.js">linguisticas.js</a>
-          </td>
-          <td class="size" title="455601">444.92 KB</td>
-          <td class="mod-date">2/27/2026, 8:44:29 PM</td>
-        </tr>
-
-        <tr>
-          <td class="name">
-            <svg class="icon" xmlns="http://www.w3.org/2000/svg">
-              <use href="#file"/>
-            </svg>
-            <a href="./index.html">index.html</a>
-          </td>
-          <td class="size" title="3324">3.25 KB</td>
-          <td class="mod-date">2/27/2026, 8:44:29 PM</td>
-        </tr>
-
-        <tr>
-          <td class="name">
-            <svg class="icon" xmlns="http://www.w3.org/2000/svg">
-              <use href="#file"/>
-            </svg>
-            <a href="./about.html">about.html</a>
-          </td>
-          <td class="size" title="3156">3.08 KB</td>
-          <td class="mod-date">2/27/2026, 8:44:29 PM</td>
-        </tr>
-    </tbody>
-  </table>
-</main>
-<footer>Repository <a href="https://github.com/linguisticas/linguisticas.github.io">linguisticas/linguisticas.github.io</a></footer>
+    <!-- Standalone JS for hamburger -->
+    <script src="risurcoj/menu.js"></script>
 </body>
+
 </html>
