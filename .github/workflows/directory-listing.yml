@@ -1,0 +1,29 @@
+name: Directory Listing
+
+on:
+  push:
+    branches:
+      - main   # adjust if your default branch is different
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Generate directory listings
+        uses: gacts/directory-listing@v1
+        with:
+          target: .   # root of your repo
+          ignore: |
+            node_modules/**
+            .github/**
+          show-hidden: false
+          overwrite: true
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: .
