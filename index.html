@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <!-- ĉefa agordo -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lingüísticas</title>
+
+    <!-- bazaj stiloj -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- temaj stiloj -->
+    <link rel="stylesheet" href="css/light.css" media="(prefers-color-scheme: light)">
+    <link rel="stylesheet" href="css/dark.css" media="(prefers-color-scheme: dark)">
+
+    <!-- sintakso-emfazaj temoj -->
+    <link rel="stylesheet" href="css/github.min.css" media="(prefers-color-scheme: light)">
+    <link rel="stylesheet" href="css/github-dark.min.css" media="(prefers-color-scheme: dark)">
+
+    <!-- matematikaj stiloj -->
+    <link rel="stylesheet" href="css/katex.css">
+
+    <!-- navigada menuo -->
+    <link rel="stylesheet" href="css/menu.css">
+</head>
+
+<body>
+    <header>
+        <h1>Lingüísticas</h1>
+        <!-- Hamburger button -->
+        <button class="hamburger" aria-label="Abrir menú">☰</button>
+    </header>
+
+    <!-- Overlay and sliding panel -->
+    <div class="menu-overlay"></div>
+    <nav class="menu-panel">
+        <ul>
+            <li><a href="index.html">Página principal</a></li>
+            <li><a href="agg/agg.html">Atlas del genoma gramatical</a></li>
+            <li><a href="dokumentoj/README.md">Documentación</a></li>
+            <li><a href="about.html">Acerca del proyecto</a></li>
+            <li><a href="contact.html">Contacto</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="intro">
+            <p>Este es el sitio oficial del proyecto <strong>Lingüísticas</strong>. Aquí alojaremos el <i>Atlas</i> y
+                podremos explorar las muchas características que ya tenemos disponibles.</p>
+        </section>
+
+        <section id="features">
+            <h2>Características</h2>
+            <ul>
+                <li><a href="klerigado/programlingvo.html">Lenguajes de programación</a></li>
+                <li><a href="klerigado/ortografio.html">Ortografía</a></li>
+                <li><a href="klerigado/matematiko.html">Matemáticas</a></li>
+                <li><a href="analisis.html">Análisis de obras gramaticales <strong>(Aún no probar. Sin construir:
+                            404)</strong></a></li>
+                <li><a href="tipografia.html">Tipografía <strong>(Aún no probar. Sin construir: 404)</strong></a>
+                </li>
+            </ul>
+        </section>
+
+        <section id="summary">
+            <h2>Resumen</h2>
+            <p>
+                Desde el inicio de esta conversación hemos logrado establecer la infraestructura básica del sitio:
+                integración de <i>Markdown</i> con resaltado de sintaxis y fórmulas matemáticas, estilos temáticos
+                claros para modo claro y oscuro, un menú de navegación accesible con hamburguesa y superposición modal,
+                y la separación entre contenido estático y dinámico para cargar documentos. Todo esto nos acerca a un
+                sistema estable y escalable para el <i>Atlas</i> y el léxico AGG.
+            </p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 AEC</p>
+    </footer>
+
+    <!-- Standalone JS for hamburger -->
+    <script src="risurcoj/menu.js"></script>
+</body>
+
+</html>

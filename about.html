@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Acerca de Lingüísticas</title>
+
+    <!-- Base styles -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Theme-specific styles -->
+    <link rel="stylesheet" href="css/light.css" media="(prefers-color-scheme: light)">
+    <link rel="stylesheet" href="css/dark.css" media="(prefers-color-scheme: dark)">
+
+    <!-- Syntax highlighting themes -->
+    <link rel="stylesheet" href="css/github.min.css" media="(prefers-color-scheme: light)">
+    <link rel="stylesheet" href="css/github-dark.min.css" media="(prefers-color-scheme: dark)">
+
+    <!-- Math -->
+    <link rel="stylesheet" href="css/katex.css">
+
+    <!-- Menu styles -->
+    <link rel="stylesheet" href="css/menu.css">
+</head>
+
+<body>
+    <header>
+        <h1>Acerca de Lingüísticas</h1>
+        <!-- Hamburger button -->
+        <button class="hamburger" aria-label="Open menu">☰</button>
+    </header>
+
+    <!-- Overlay and sliding panel -->
+    <div class="menu-overlay"></div>
+    <nav class="menu-panel">
+        <ul>
+            <li><a href="index.html">Página principal</a></li>
+            <li><a href="agg.html">Atlas del genoma gramatical</a></li>
+            <li><a href="#" data-md="dokumentoj/atlas-entry1.md">Atlas Entry 1</a></li>
+            <li><a href="#" data-md="dokumentoj/atlas-entry2.md">Atlas Entry 2</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <div id="static">
+            <p>Este proyecto toma lugar en una comunidad de WhatsApp llamada <i>Lingüística</i>, la cual fue creada para
+                compartir e intercambiar conocimientos de la lengua desde ámbitos como la ortografía, la sintaxis, etc.
+                <br>
+                La comunidad <i>Lingüísticas</i> se forma en un intento por unificar todas las cuestiones de lengua en
+                múltiples lenguas, con un nivel de rigor superior.
+            </p>
+        </div>
+        <div id="md-container">Aquí se pueden visualizar documentos en lenguaje de marcado o nada en especial.</div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Lingüísticas Project</p>
+    </footer>
+
+    <script src="risurcoj/linguisticas.js"></script>
+    <script>
+        const container = document.getElementById('md-container');
+
+        function loadMarkdown(path) {
+            fetch(path)
+                .then(res => res.text())
+                .then(md => {
+                    container.innerHTML = window.renderMarkdown(md);
+                })
+                .catch(err => {
+                    container.innerHTML =
+                        "<p style='color:red'>Error loading Markdown: " + err + "</p>";
+                });
+        }
+
+        // Attach click handlers to menu links
+        document.querySelectorAll('[data-md]').forEach(link => {
+            link.addEventListener('click', e => {
+                e.preventDefault();
+                loadMarkdown(link.dataset.md);
+            });
+        });
+    </script>
+
+    <!-- Standalone JS for hamburger -->
+    <script src="risurcoj/menu.js"></script>
+</body>
+
+</html>

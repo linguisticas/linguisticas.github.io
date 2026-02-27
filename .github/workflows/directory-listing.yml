@@ -1,0 +1,30 @@
+name: Directory Listing
+
+on:
+  push:
+    branches:
+      - gh-pages   # trigger when you push to gh-pages
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Generate directory listings
+        uses: gacts/directory-listing@v1
+        with:
+          target: .   # root of your repo
+          ignore: |
+            node_modules/**
+            .github/**
+          show-hidden: false
+          overwrite: true
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages   # deploy into gh-pages
+          publish_dir: .             # deploy root after listings are generated

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Atlas del genoma gramatical</title>
+
+    <!-- Base styles -->
+    <link rel="stylesheet" href="../css/style.css">
+
+    <!-- Theme-specific styles -->
+    <link rel="stylesheet" href="../css/light.css" media="(prefers-color-scheme: light)">
+    <link rel="stylesheet" href="../css/dark.css" media="(prefers-color-scheme: dark)">
+
+    <!-- Syntax highlighting themes -->
+    <link rel="stylesheet" href="../css/github.min.css" media="(prefers-color-scheme: light)">
+    <link rel="stylesheet" href="../css/github-dark.min.css" media="(prefers-color-scheme: dark)">
+
+    <!-- Math -->
+    <link rel="stylesheet" href="../css/katex.css">
+
+    <!-- Menu styles -->
+    <link rel="stylesheet" href="../css/menu.css">
+
+    <!-- Query styles -->
+    <link rel="stylesheet" href="../css/agg.css">
+</head>
+
+<body>
+    <header>
+        <h1>Atlas del genoma gramatical</h1>
+        <!-- Hamburger button -->
+        <button class="hamburger" aria-label="Open menu">☰</button>
+    </header>
+
+    <!-- Overlay and sliding panel -->
+    <div class="menu-overlay"></div>
+    <nav class="menu-panel">
+        <ul>
+            <li><a href="../index.html">Página principal</a></li>
+            <li><a href="#" data-md="../dokumentoj/atlas-entry1.md">Atlas Entry 1</a></li>
+            <li><a href="#" data-md="../dokumentoj/atlas-entry2.md">Atlas Entry 2</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <div id="static">
+            <p>Bienvenido al <i>Atlas del genoma gramatical</i>. La función que cumple esta sección es construir una
+                base de datos léxico-semántica.</p>
+        </div>
+
+        <!-- Query field -->
+        <div id="query-section">
+            <label for="query-input">Buscar entrada:</label>
+            <input type="text" id="query-input" placeholder="Escribe una palabra...">
+            <div id="query-results"></div>
+        </div>
+
+        <div id="md-container">Si te parece, puedes explorar las características o una entrada.</div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Lingüísticas Project</p>
+    </footer>
+
+    <script src="../risurcoj/linguisticas.js"></script>
+    <script src="../risurcoj/query.js"></script>
+    <script src="../risurcoj/menu.js"></script>
+</body>
+
+</html>

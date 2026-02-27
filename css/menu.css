@@ -1,0 +1,95 @@
+/* Base hamburger styles */
+.hamburger {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1001;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: inherit;
+}
+
+/* Menu overlay */
+.menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  /* darken screen */
+  display: none;
+  z-index: 1000;
+  transition: opacity 0.3s ease;
+}
+
+/* Menu panel */
+.menu-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 250px;
+  height: 100%;
+  background-color: var(--menu-bg);
+  color: var(--menu-text);
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  z-index: 1002;
+  padding: 1rem;
+}
+
+.menu-panel ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu-panel li {
+  margin: 1rem 0;
+}
+
+.menu-panel a {
+  color: var(--menu-link);
+  text-decoration: none;
+}
+
+.menu-panel a:hover {
+  text-decoration: underline;
+}
+
+/* Active states */
+.menu-overlay.active {
+  display: block;
+  opacity: 1;
+}
+
+.menu-panel.active {
+  transform: translateX(0);
+}
+
+/* Light theme variables */
+@media (prefers-color-scheme: light) {
+  :root {
+    --menu-bg: #c8e6c9;
+    /* pale green */
+    --menu-text: #1b5e20;
+    /* deep green */
+    --menu-link: #2e7d32;
+    /* rich green accent */
+  }
+}
+
+/* Dark theme variables */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --menu-bg: #052007;
+    /* deep green */
+    --menu-text: #caf3cc;
+    /* pale green */
+    --menu-link: #4de68a;
+    /* fresh green accent */
+  }
+}

@@ -1,0 +1,88 @@
+/* Font setup */
+@font-face {
+    font-family: 'NotoSans';
+    src: url('../tiparoj/NotoSans-VariableFont_wdth,wght.woff2') format('woff2');
+    font-weight: 100 900;
+    font-stretch: 75% 125%;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'NotoSans';
+    src: url('../tiparoj/NotoSans-Italic-VariableFont_wdth,wght.woff2') format('woff2');
+    font-weight: 100 900;
+    font-stretch: 75% 125%;
+    font-style: italic;
+}
+
+/* Base layout */
+html,
+body {
+    height: 100%;
+    /* full viewport height */
+    margin: 0;
+    /* reset default margins */
+    display: flex;
+    /* flex container */
+    flex-direction: column;
+    /* vertical stacking */
+    font-size: 100%;
+    /* base = 16px, scales with user settings */
+}
+
+body {
+    font-family: 'NotoSans', sans-serif;
+    line-height: 1.6;
+    font-size: 1rem;
+    /* responsive base size */
+    padding: 2vw;
+    /* fancy canvas margin */
+    margin: auto;
+    /* center the whole page horizontally */
+    box-sizing: border-box;
+}
+
+/* Typography */
+h1 {
+    font-size: clamp(1.8rem, 4vw, 3rem);
+}
+
+h2 {
+    font-size: clamp(1.4rem, 3vw, 2rem);
+}
+
+p {
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    word-break: break-word;
+    /* allow breaking inside long tokens */
+}
+
+/* Structural elements */
+header,
+footer {
+    padding: 1em;
+    text-align: center;
+}
+
+main {
+    flex: 1;
+    /* expands to push footer down */
+    margin: 2em auto;
+    /* extra breathing room */
+}
+
+@media (prefers-color-scheme: dark) {
+    nav a {
+        color: #66b2ff;
+        /* lighter accent for dark mode */
+    }
+
+    nav a:hover {
+        color: #99ccff;
+        border-bottom: 2px solid #99ccff;
+    }
+}
+
+.versalitas {
+    font-variant: small-caps;
+}
