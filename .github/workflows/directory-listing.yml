@@ -3,7 +3,7 @@ name: Directory Listing
 on:
   push:
     branches:
-      - gh-pages   # trigger when you push to gh-pages
+      - main   # trigger when you push to main
 
 jobs:
   build:
