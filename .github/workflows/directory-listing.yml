@@ -15,7 +15,7 @@ jobs:
       - name: Generate directory listings
         uses: gacts/directory-listing@v1
         with:
-          target: .   # root of your repo
+          target: .
           ignore: |
             node_modules/**
             .github/**
