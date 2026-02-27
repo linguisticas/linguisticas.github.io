@@ -1,4 +1,3 @@
----
 # Manzana
 sustantivo
 ## Funciona
