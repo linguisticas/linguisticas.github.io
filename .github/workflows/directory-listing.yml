@@ -3,7 +3,7 @@ name: Directory Listing
 on:
   push:
     branches:
-      - main   # adjust if your default branch is different
+      - gh-pages   # trigger when you push to gh-pages
 
 jobs:
   build:
@@ -26,4 +26,5 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: .
+          publish_branch: gh-pages   # deploy into gh-pages
+          publish_dir: .             # deploy root after listings are generated
