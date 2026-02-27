@@ -8605,49 +8605,60 @@
 	// ???????? → ???, !!!!! → !!!, `,,` → `,`
 	// -- → &ndash;, --- → &mdash;
 	//
-
 	// TODO:
 	// - fractionals 1/2, 1/4, 3/4 -> ½, ¼, ¾
 	// - multiplications 2 x 4 -> 2 × 4
 
-	const RARE_RE = /\+-|\.\.|\?\?\?\?|!!!!|,,|--/;
+	// Regex to detect "rare" replacements in text.
+	// Matches: "+-", ".." (two or more dots), "????" (four or more ?),
+	// "!!!!" (four or more !), and "--" (double dash).
+	// Note: we removed `,,` here to preserve double commas.
+	const RARE_RE = /\+-|\.\.|,,|\?\?\?\?|!!!!|--/;
 
-	// Workaround for phantomjs - need regex without /g flag,
-	// or root check will fail every second time
+	// Regex to detect scoped abbreviations like (c), (tm), (r).
+	// TEST_RE is case-insensitive, used just to check if content has them.
 	const SCOPED_ABBR_TEST_RE = /\((c|tm|r)\)/i;
 
+	// Actual replacement regex, global + case-insensitive.
 	const SCOPED_ABBR_RE = /\((c|tm|r)\)/ig;
+
+	// Mapping table for abbreviations.
 	const SCOPED_ABBR = {
 	  c: '©',
 	  r: '®',
 	  tm: '™'
 	};
 
-	function replaceFn (match, name) {
+	// Replacement function: takes match and abbreviation name,
+	// returns the corresponding symbol.
+	function replaceFn(match, name) {
 	  return SCOPED_ABBR[name.toLowerCase()]
 	}
 
-	function replace_scoped (inlineTokens) {
+	// Replace scoped abbreviations inside inline tokens.
+	function replace_scoped(inlineTokens) {
 	  let inside_autolink = 0;
 
 	  for (let i = inlineTokens.length - 1; i >= 0; i--) {
 	    const token = inlineTokens[i];
 
+	    // Only process plain text, not inside auto-links.
 	    if (token.type === 'text' && !inside_autolink) {
 	      token.content = token.content.replace(SCOPED_ABBR_RE, replaceFn);
 	    }
 
+	    // Track whether we are inside an auto-link.
 	    if (token.type === 'link_open' && token.info === 'auto') {
 	      inside_autolink--;
 	    }
-
 	    if (token.type === 'link_close' && token.info === 'auto') {
 	      inside_autolink++;
 	    }
 	  }
 	}
 
-	function replace_rare (inlineTokens) {
+	// Replace "rare" typographic sequences.
+	function replace_rare(inlineTokens) {
 	  let inside_autolink = 0;
 
 	  for (let i = inlineTokens.length - 1; i >= 0; i--) {
@@ -8656,30 +8667,37 @@
 	    if (token.type === 'text' && !inside_autolink) {
 	      if (RARE_RE.test(token.content)) {
 	        token.content = token.content
+	          // "+-" → ±
 	          .replace(/\+-/g, '±')
-	          // .., ..., ....... -> …
-	          // but ?..... & !..... -> ?.. & !..
+	          // Two or more dots → ellipsis (…)
+	          // But if preceded by ? or !, collapse to ".."
 	          .replace(/\.{2,}/g, '…').replace(/([?!])…/g, '$1..')
-	          .replace(/([?!]){4,}/g, '$1$1$1').replace(/,{2,}/g, ',')
-	          // em-dash
+	          // Four or more ? or ! → collapse to three
+	          .replace(/([?!]){4,}/g, '$1$1$1')
+	          // Multiple commas → single comma
+	          // (comment out if you want to keep ,, untouched)
+	          //.replace(/,{2,}/g, ',')
+	          // --- → em-dash (—)
 	          .replace(/(^|[^-])---(?=[^-]|$)/mg, '$1\u2014')
-	          // en-dash
+	          // -- surrounded by spaces → en-dash (–)
 	          .replace(/(^|\s)--(?=\s|$)/mg, '$1\u2013')
+	          // -- between non-space chars → en-dash (–)
 	          .replace(/(^|[^-\s])--(?=[^-\s]|$)/mg, '$1\u2013');
 	      }
 	    }
 
+	    // Track auto-link context.
 	    if (token.type === 'link_open' && token.info === 'auto') {
 	      inside_autolink--;
 	    }
-
 	    if (token.type === 'link_close' && token.info === 'auto') {
 	      inside_autolink++;
 	    }
 	  }
 	}
 
-	function replace (state) {
+	// Main entry point: runs replacements if typographer is enabled.
+	function replace(state) {
 	  let blkIdx;
 
 	  if (!state.md.options.typographer) { return }
@@ -8687,10 +8705,12 @@
 	  for (blkIdx = state.tokens.length - 1; blkIdx >= 0; blkIdx--) {
 	    if (state.tokens[blkIdx].type !== 'inline') { continue }
 
+	    // Replace abbreviations like (c), (tm), (r).
 	    if (SCOPED_ABBR_TEST_RE.test(state.tokens[blkIdx].content)) {
 	      replace_scoped(state.tokens[blkIdx].children);
 	    }
 
+	    // Replace rare sequences like "+-", "..", "!!!!", "--".
 	    if (RARE_RE.test(state.tokens[blkIdx].content)) {
 	      replace_rare(state.tokens[blkIdx].children);
 	    }
@@ -10933,7 +10953,7 @@
 
 	// !!!! Don't confuse with "Markdown ASCII Punctuation" chars
 	// http://spec.commonmark.org/0.15/#ascii-punctuation-character
-	function isTerminatorChar (ch) {
+	function isTerminatorChar(ch) {
 	  switch (ch) {
 	    case 0x0A/* \n */:
 	    case 0x21/* ! */:
@@ -10956,15 +10976,17 @@
 	    case 0x5F/* _ */:
 	    case 0x60/* ` */:
 	    case 0x7B/* { */:
+	    case 0x7C/* | */:   // 👈 added
 	    case 0x7D/* } */:
 	    case 0x7E/* ~ */:
+	    case 0xA7/* § */:   // 👈 added
 	      return true
 	    default:
 	      return false
 	  }
 	}
 
-	function text$2 (state, silent) {
+	function text$2(state, silent) {
 	  let pos = state.pos;
 
 	  while (pos < state.posMax && !isTerminatorChar(state.src.charCodeAt(pos))) {
@@ -11292,7 +11314,7 @@
 	  return true
 	}
 
-	function postProcess$1 (state, delimiters) {
+	function postProcess$2 (state, delimiters) {
 	  let token;
 	  const loneMarkers = [];
 	  const max = delimiters.length;
@@ -11360,11 +11382,11 @@
 	  const tokens_meta = state.tokens_meta;
 	  const max = state.tokens_meta.length;
 
-	  postProcess$1(state, state.delimiters);
+	  postProcess$2(state, state.delimiters);
 
 	  for (let curr = 0; curr < max; curr++) {
 	    if (tokens_meta[curr] && tokens_meta[curr].delimiters) {
-	      postProcess$1(state, tokens_meta[curr].delimiters);
+	      postProcess$2(state, tokens_meta[curr].delimiters);
 	    }
 	  }
 	}
@@ -11424,7 +11446,7 @@
 	  return true
 	}
 
-	function postProcess (state, delimiters) {
+	function postProcess$1 (state, delimiters) {
 	  const max = delimiters.length;
 
 	  for (let i = max - 1; i >= 0; i--) {
@@ -11484,11 +11506,11 @@
 	  const tokens_meta = state.tokens_meta;
 	  const max = state.tokens_meta.length;
 
-	  postProcess(state, state.delimiters);
+	  postProcess$1(state, state.delimiters);
 
 	  for (let curr = 0; curr < max; curr++) {
 	    if (tokens_meta[curr] && tokens_meta[curr].delimiters) {
-	      postProcess(state, tokens_meta[curr].delimiters);
+	      postProcess$1(state, tokens_meta[curr].delimiters);
 	    }
 	  }
 	}
@@ -11948,6 +11970,115 @@
 	  return false
 	}
 
+	// Process |this| and §that§
+	//
+
+	// Insert each marker as a separate text token, and add it to delimiter list
+	//
+	function smallcaps_tokenize(state, silent) {
+	  const start = state.pos;
+	  const marker = state.src.charCodeAt(start);
+
+	  if (silent) { return false }
+
+	  if (marker !== 0x7C /* | */ && marker !== 0xA7 /* § */) { return false }
+
+	  const scanned = state.scanDelims(state.pos, false);
+
+	  for (let i = 0; i < scanned.length; i++) {
+	    const token = state.push('text', '', 0);
+	    token.content = String.fromCharCode(marker);
+
+	    state.delimiters.push({
+	      marker,
+	      length: scanned.length,
+	      token: state.tokens.length - 1,
+	      end: -1,
+	      open: scanned.can_open,
+	      close: scanned.can_close
+	    });
+	  }
+
+	  state.pos += scanned.length;
+
+	  return true
+	}
+
+	function postProcess(state, delimiters) {
+	  const max = delimiters.length;
+
+	  for (let i = max - 1; i >= 0; i--) {
+	    const startDelim = delimiters[i];
+
+	    if (startDelim.marker !== 0x7C /* | */ && startDelim.marker !== 0xA7 /* § */) {
+	      continue
+	    }
+
+	    // Process only opening markers
+	    if (startDelim.end === -1) {
+	      continue
+	    }
+
+	    const endDelim = delimiters[startDelim.end];
+
+	    // If the previous delimiter has the same marker and is adjacent to this one,
+	    // merge those into one strong delimiter.
+	    //
+	    // `<span><span>whatever</span></span>` -> `<span style="color:red">whatever</span>`
+	    //
+	    const isStrong = i > 0 &&
+	      delimiters[i - 1].end === startDelim.end + 1 &&
+	      delimiters[i - 1].marker === startDelim.marker &&
+	      delimiters[i - 1].token === startDelim.token - 1 &&
+	      delimiters[startDelim.end + 1].token === endDelim.token + 1;
+
+	    const ch = String.fromCharCode(startDelim.marker);
+
+	    const token_o = state.tokens[startDelim.token];
+	    token_o.type = isStrong ? 'smallcaps_strong_open' : 'smallcaps_open';
+	    token_o.tag = 'span';
+	    token_o.nesting = 1;
+	    token_o.markup = isStrong ? ch + ch : ch;
+	    token_o.attrs = isStrong
+	      ? [['style', 'font-variant: petite-caps;']]
+	      : [['style', 'font-variant: small-caps;']];
+	    token_o.content = '';
+
+	    const token_c = state.tokens[endDelim.token];
+	    token_c.type = isStrong ? 'smallcaps_strong_close' : 'smallcaps_close';
+	    token_c.tag = 'span';
+	    token_c.nesting = -1;
+	    token_c.markup = isStrong ? ch + ch : ch;
+	    token_c.content = '';
+
+	    if (isStrong) {
+	      state.tokens[delimiters[i - 1].token].content = '';
+	      state.tokens[delimiters[startDelim.end + 1].token].content = '';
+	      i--;
+	    }
+	  }
+	}
+
+	// Walk through delimiter list and replace text tokens with tags
+	//
+	function smallcaps_post_process(state) {
+	  const tokens_meta = state.tokens_meta;
+	  const max = state.tokens_meta.length;
+
+	  postProcess(state, state.delimiters);
+
+	  for (let curr = 0; curr < max; curr++) {
+	    if (tokens_meta[curr] && tokens_meta[curr].delimiters) {
+	      postProcess(state, tokens_meta[curr].delimiters);
+	    }
+	  }
+	}
+
+	var r_smallcaps = {
+	  tokenize: smallcaps_tokenize,
+	  postProcess: smallcaps_post_process
+	};
+
 	// For each opening emphasis-like marker find a matching closing one
 	//
 
@@ -12122,18 +12253,20 @@
 	// Parser rules
 
 	const _rules = [
-	  ['text',            text$2],
-	  ['linkify',         linkify],
-	  ['newline',         newline],
-	  ['escape',          escape$1],
-	  ['backticks',       backtick],
-	  ['strikethrough',   r_strikethrough.tokenize],
-	  ['emphasis',        r_emphasis.tokenize],
-	  ['link',            link],
-	  ['image',           image],
-	  ['autolink',        autolink],
-	  ['html_inline',     html_inline],
-	  ['entity',          entity]
+	  ['text', text$2],
+	  ['linkify', linkify],
+	  ['newline', newline],
+	  ['escape', escape$1],
+	  ['backticks', backtick],
+	  ['strikethrough', r_strikethrough.tokenize],
+	  ['emphasis', r_emphasis.tokenize],
+	  ['link', link],
+	  ['image', image],
+	  ['autolink', autolink],
+	  ['html_inline', html_inline],
+	  ['entity', entity],
+	  // 👇 register smallcaps tokenizer
+	  ['smallcaps', r_smallcaps.tokenize]
 	];
 
 	// `rule2` ruleset was created specifically for emphasis/strikethrough
@@ -12142,18 +12275,22 @@
 	// Don't use this for anything except pairs (plugins working with `balance_pairs`).
 	//
 	const _rules2 = [
-	  ['balance_pairs',   link_pairs],
-	  ['strikethrough',   r_strikethrough.postProcess],
-	  ['emphasis',        r_emphasis.postProcess],
+	  ['balance_pairs', link_pairs],
+	  ['strikethrough', r_strikethrough.postProcess],
+	  ['emphasis', r_emphasis.postProcess],
+	  // Rule is working
+	  ['smallcaps', r_smallcaps.postProcess],
 	  // rules for pairs separate '**' into its own text tokens, which may be left unused,
 	  // rule below merges unused segments back with the rest of the text
-	  ['fragments_join',  fragments_join]
+	  ['fragments_join', fragments_join]
+	  // 👇 optional: add postProcess if your rule needs it
+
 	];
 
 	/**
 	 * new ParserInline()
 	 **/
-	function ParserInline () {
+	function ParserInline() {
 	  /**
 	   * ParserInline#ruler -> Ruler
 	   *
@@ -12197,10 +12334,6 @@
 
 	  if (state.level < maxNesting) {
 	    for (let i = 0; i < len; i++) {
-	      // Increment state.level and decrement it later to limit recursion.
-	      // It's harmless to do here, because no tokens are created. But ideally,
-	      // we'd need a separate private state variable for this purpose.
-	      //
 	      state.level++;
 	      ok = rules[i](state, true);
 	      state.level--;
@@ -12211,17 +12344,6 @@
 	      }
 	    }
 	  } else {
-	    // Too much nesting, just skip until the end of the paragraph.
-	    //
-	    // NOTE: this will cause links to behave incorrectly in the following case,
-	    //       when an amount of `[` is exactly equal to `maxNesting + 1`:
-	    //
-	    //       [[[[[[[[[[[[[[[[[[[[[foo]()
-	    //
-	    // TODO: remove this workaround when CM standard will allow nested links
-	    //       (we can replace it by preventing links from being parsed in
-	    //       validation mode)
-	    //
 	    state.pos = state.posMax;
 	  }
 
@@ -12238,12 +12360,6 @@
 	  const maxNesting = state.md.options.maxNesting;
 
 	  while (state.pos < end) {
-	    // Try all possible rules.
-	    // On success, rule should:
-	    //
-	    // - update `state.pos`
-	    // - update `state.tokens`
-	    // - return true
 	    const prevPos = state.pos;
 	    let ok = false;
 
@@ -13601,7 +13717,13 @@
 	  components: {
 	    core: {},
 	    block: {},
-	    inline: {}
+	    inline: {
+	      rules: [
+	        'emphasis',
+	        'smallcaps'
+	      ]
+	    }
+
 	  }
 	};
 
@@ -13744,22 +13866,44 @@
 	    },
 
 	    inline: {
+	    }
+	  }
+	};
+
+	var cfg_linguisticas = {
+	  options: {
+	    html: true,
+	    xhtmlOut: true,
+	    breaks: false,
+	    langPrefix: 'language-',
+	    linkify: false,
+	    typographer: true,
+	    quotes: '\u00AB\u00BB\u2018\u2019', /* «»‘’ */
+	    maxNesting: 20
+	  },
+
+	  components: {
+	    core: {},
+	    block: {},
+	    inline: {
 	      rules: [
-	        'autolink',
+	        'text',
+	        'newline',
+	        'escape',
 	        'backticks',
 	        'emphasis',
-	        'entity',
-	        'escape',
-	        'html_inline',
-	        'image',
 	        'link',
-	        'newline',
-	        'text'
+	        'image',
+	        'autolink',
+	        'html_inline',
+	        'entity',
+	        'smallcaps'
 	      ],
 	      rules2: [
 	        'balance_pairs',
 	        'emphasis',
-	        'fragments_join'
+	        'fragments_join',
+	        'smallcaps'
 	      ]
 	    }
 	  }
@@ -13768,10 +13912,12 @@
 	// Main parser class
 
 
+
 	const config = {
 	  default: cfg_default,
 	  zero: cfg_zero,
-	  commonmark: cfg_commonmark
+	  commonmark: cfg_commonmark,
+	  linguisticas: cfg_linguisticas
 	};
 
 	//
@@ -13785,7 +13931,7 @@
 	const BAD_PROTO_RE = /^(vbscript|javascript|file|data):/;
 	const GOOD_DATA_RE = /^data:image\/(gif|png|jpeg|webp);/;
 
-	function validateLink (url) {
+	function validateLink(url) {
 	  // url should be normalized at this point, and existing entities are decoded
 	  const str = url.trim().toLowerCase();
 
@@ -13794,7 +13940,7 @@
 
 	const RECODE_HOSTNAME_FOR = ['http:', 'https:', 'mailto:'];
 
-	function normalizeLink (url) {
+	function normalizeLink(url) {
 	  const parsed = urlParse(url, true);
 
 	  if (parsed.hostname) {
@@ -13814,7 +13960,7 @@
 	  return encode$1(format(parsed))
 	}
 
-	function normalizeLinkText (url) {
+	function normalizeLinkText(url) {
 	  const parsed = urlParse(url, true);
 
 	  if (parsed.hostname) {
@@ -13968,7 +14114,7 @@
 	 * ```
 	 *
 	 **/
-	function MarkdownIt (presetName, options) {
+	function MarkdownIt(presetName, options) {
 	  if (!(this instanceof MarkdownIt)) {
 	    return new MarkdownIt(presetName, options)
 	  }

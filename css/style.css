@@ -19,26 +19,18 @@
 html,
 body {
     height: 100%;
-    /* full viewport height */
     margin: 0;
-    /* reset default margins */
     display: flex;
-    /* flex container */
     flex-direction: column;
-    /* vertical stacking */
     font-size: 100%;
-    /* base = 16px, scales with user settings */
 }
 
 body {
     font-family: 'NotoSans', sans-serif;
     line-height: 1.6;
     font-size: 1rem;
-    /* responsive base size */
     padding: 2vw;
-    /* fancy canvas margin */
     margin: auto;
-    /* center the whole page horizontally */
     box-sizing: border-box;
 }
 
@@ -54,7 +46,18 @@ h2 {
 p {
     font-size: clamp(1rem, 2.5vw, 1.2rem);
     word-break: break-word;
-    /* allow breaking inside long tokens */
+}
+
+/* Code and preformatted text wrapping */
+pre,
+code,
+pre code {
+    white-space: pre-wrap;
+    /* preserve whitespace but allow wrapping */
+    word-wrap: break-word;
+    /* break long words if needed */
+    overflow-wrap: break-word;
+    /* modern equivalent */
 }
 
 /* Structural elements */
@@ -66,23 +69,17 @@ footer {
 
 main {
     flex: 1;
-    /* expands to push footer down */
     margin: 2em auto;
-    /* extra breathing room */
 }
 
+/* Dark mode tweaks */
 @media (prefers-color-scheme: dark) {
     nav a {
         color: #66b2ff;
-        /* lighter accent for dark mode */
     }
 
     nav a:hover {
         color: #99ccff;
         border-bottom: 2px solid #99ccff;
     }
-}
-
-.versalitas {
-    font-variant: small-caps;
 }
