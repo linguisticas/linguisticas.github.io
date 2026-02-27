@@ -36,8 +36,6 @@ body {
     font-size: 1rem;
     /* responsive base size */
     padding: 2vw;
-    /* scales with viewport width */
-    max-width: 1200px;
     /* fancy canvas margin */
     margin: auto;
     /* center the whole page horizontally */
@@ -73,84 +71,18 @@ main {
     /* extra breathing room */
 }
 
-<<<<<<< HEAD
-/* Responsive images */
-img {
-    max-width: 100%;
-    /* never overflow container */
-    height: auto;
-    /* preserve aspect ratio */
-    display: block;
-    /* remove inline spacing quirks */
-    margin: 1.5em auto;
-    /* fancy margins around images */
-    border-radius: 6px;
-    /* subtle rounded corners */
-}
-
-/* Inline code */
-code {
-    font-family:
-        "Cascadia Mono",
-        "Consolas",
-        "Menlo",
-        "Monaco",
-        "Roboto Mono",
-        "SF Mono",
-        "Courier New",
-        monospace;
-    font-weight: 400;
-    padding: 0.2em 0.4em;
-    border-radius: 4px;
-    word-break: break-word;
-    /* allow breaking inside long tokens */
-    white-space: pre-wrap;
-    /* wrap instead of forcing horizontal scroll */
-}
-
-/* Code blocks */
-pre {
-    background-color: rgba(0, 0, 0, 0.07);
-    padding: 1em;
-    border-radius: 6px;
-    overflow-x: auto;
-    /* scroll only if absolutely needed */
-    max-width: 100%;
-    /* never overflow viewport */
-    box-sizing: border-box;
-    margin: 1.5em 0;
-    /* fancy vertical spacing */
-}
-
-pre code {
-    font-family:
-        "Cascadia Mono",
-        "Consolas",
-        "Menlo",
-        "Monaco",
-        "Roboto Mono",
-        "SF Mono",
-        "Courier New",
-        monospace;
-    font-size: 0.95em;
-    font-weight: 400;
-    line-height: 1.4;
-    white-space: pre-wrap;
-    /* wrap long lines */
-    word-break: break-word;
-}
-=======
 @media (prefers-color-scheme: dark) {
-  nav a {
-    color: #66b2ff;            /* lighter accent for dark mode */
-  }
-  nav a:hover {
-    color: #99ccff;
-    border-bottom: 2px solid #99ccff;
-  }
+    nav a {
+        color: #66b2ff;
+        /* lighter accent for dark mode */
+    }
+
+    nav a:hover {
+        color: #99ccff;
+        border-bottom: 2px solid #99ccff;
+    }
 }
 
 .versalitas {
-  font-variant: small-caps;
+    font-variant: small-caps;
 }
->>>>>>> 5cc1179d6fdd0cb520b9987971f7ce6aab00ef53
