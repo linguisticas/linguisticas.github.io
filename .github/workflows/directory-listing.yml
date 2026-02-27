@@ -19,6 +19,7 @@ jobs:
           ignore: |
             node_modules/**
             .github/**
+            index.html        # <-- prevent overwriting your homepage
           show-hidden: false
           overwrite: true
 
