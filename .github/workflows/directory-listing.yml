@@ -12,14 +12,14 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
+      # Generate listings in all subfolders, but not at root
       - name: Generate directory listings
         uses: gacts/directory-listing@v1
         with:
-          target: .
+          target: */        # <-- match all first-level subdirectories
           ignore: |
             node_modules/**
             .github/**
-            index.html        # <-- prevent overwriting your homepage
           show-hidden: false
           overwrite: true
 
