@@ -1,140 +1,101 @@
 /* Font setup */
 @font-face {
-    font-family: 'NotoSans';
-    src: url('../tiparoj/NotoSans-VariableFont_wdth,wght.woff2') format('woff2');
-    font-weight: 100 900;
-    font-stretch: 75% 125%;
-    font-style: normal;
+  font-family: 'Noto Sans';
+  src: url('../fonts/NotoSans-VariableFont_wdth,wght.woff2') format('woff2');
+  font-weight: 100 900; /* variable range */
+  font-style: normal;
 }
 
 @font-face {
-    font-family: 'NotoSans';
-    src: url('../tiparoj/NotoSans-Italic-VariableFont_wdth,wght.woff2') format('woff2');
-    font-weight: 100 900;
-    font-stretch: 75% 125%;
-    font-style: italic;
+  font-family: 'Noto Sans';
+  src: url('../fonts/NotoSans-Italic-VariableFont_wdth,wght.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: italic;
 }
 
-/* Base layout */
-html,
+/* Global styles */
 body {
-    height: 100%;
-    /* full viewport height */
-    margin: 0;
-    /* reset default margins */
-    display: flex;
-    /* flex container */
-    flex-direction: column;
-    /* vertical stacking */
-    font-size: 100%;
-    /* base = 16px, scales with user settings */
+  margin: 0;
+  font-family: 'Noto Sans', sans-serif;
+  background: #fdfdfd;
+  color: #111;
+  line-height: 1.6;
+  font-size: clamp(1rem, 1.2vw + 0.5rem, 1.25rem);
 }
 
-body {
-    font-family: 'NotoSans', sans-serif;
-    line-height: 1.6;
-    font-size: 1rem;
-    /* responsive base size */
-    padding: 2vw;
-    /* scales with viewport width */
-    max-width: 1200px;
-    /* fancy canvas margin */
-    margin: auto;
-    /* center the whole page horizontally */
-    box-sizing: border-box;
+/* Header */
+header {
+  background: #0b1b0b; /* Edukado branch color */
+  color: #fff;
+  padding: clamp(10px, 2vw, 20px);
+  text-align: center;
 }
 
-/* Typography */
-h1 {
-    font-size: clamp(1.8rem, 4vw, 3rem);
+/* Article */
+article {
+  padding: clamp(10px, 4vw, 20px);
+  max-width: 1000px;
+  margin: auto;
+  font-weight: 300;
 }
 
-h2 {
-    font-size: clamp(1.4rem, 3vw, 2rem);
+/* Blockquote styling (light mode) */
+blockquote {
+  margin: 1em 0;
+  padding: 0.8em 1.2em;
+  border-left: 4px solid #007acc; /* accent color */
+  background: #f9f9f9;
+  color: #333;
+  font-style: normal; /* regular text */
+  font-size: clamp(0.9rem, 1vw + 0.4rem, 1.1rem);
 }
 
-p {
-    font-size: clamp(1rem, 2.5vw, 1.2rem);
-    word-break: break-word;
-    /* allow breaking inside long tokens */
+blockquote cite {
+  font-variant: small-caps; /* optional small caps */
+  color: #555;
+  margin-top: 0.5em;
+  font-style: normal;}
+
+/* Dark mode awareness */
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #121212;
+    color: #e0e0e0;
+  }
+  blockquote {
+    background: #1e1e1e;   /* dark background override */
+    color: #ddd;           /* lighter text */
+    border-left-color: #66ffb2; /* lighter accent for dark mode */
+  }
+  blockquote cite {
+    color: #aaa;
+  }
 }
 
-/* Structural elements */
-header,
-footer {
-    padding: 1em;
-    text-align: center;
+/* Navigation link styling */
+nav a {
+  color: #007acc;              /* base accent color */
+  text-decoration: none;       /* remove underline */
+  font-weight: 500;
+  transition: color 0.3s ease, border-bottom 0.3s ease;
+  border-bottom: 2px solid transparent;
 }
 
-main {
-    flex: 1;
-    /* expands to push footer down */
-    margin: 2em auto;
-    /* extra breathing room */
+nav a:hover {
+  color: #005f99;              /* darker shade on hover */
+  border-bottom: 2px solid #005f99; /* subtle underline effect */
 }
 
-/* Responsive images */
-img {
-    max-width: 100%;
-    /* never overflow container */
-    height: auto;
-    /* preserve aspect ratio */
-    display: block;
-    /* remove inline spacing quirks */
-    margin: 1.5em auto;
-    /* fancy margins around images */
-    border-radius: 6px;
-    /* subtle rounded corners */
+@media (prefers-color-scheme: dark) {
+  nav a {
+    color: #66b2ff;            /* lighter accent for dark mode */
+  }
+  nav a:hover {
+    color: #99ccff;
+    border-bottom: 2px solid #99ccff;
+  }
 }
 
-/* Inline code */
-code {
-    font-family:
-        "Cascadia Mono",
-        "Consolas",
-        "Menlo",
-        "Monaco",
-        "Roboto Mono",
-        "SF Mono",
-        "Courier New",
-        monospace;
-    font-weight: 400;
-    padding: 0.2em 0.4em;
-    border-radius: 4px;
-    word-break: break-word;
-    /* allow breaking inside long tokens */
-    white-space: pre-wrap;
-    /* wrap instead of forcing horizontal scroll */
-}
-
-/* Code blocks */
-pre {
-    background-color: rgba(0, 0, 0, 0.07);
-    padding: 1em;
-    border-radius: 6px;
-    overflow-x: auto;
-    /* scroll only if absolutely needed */
-    max-width: 100%;
-    /* never overflow viewport */
-    box-sizing: border-box;
-    margin: 1.5em 0;
-    /* fancy vertical spacing */
-}
-
-pre code {
-    font-family:
-        "Cascadia Mono",
-        "Consolas",
-        "Menlo",
-        "Monaco",
-        "Roboto Mono",
-        "SF Mono",
-        "Courier New",
-        monospace;
-    font-size: 0.95em;
-    font-weight: 400;
-    line-height: 1.4;
-    white-space: pre-wrap;
-    /* wrap long lines */
-    word-break: break-word;
+.versalitas {
+  font-variant: small-caps;
 }
