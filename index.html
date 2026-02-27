@@ -1,31 +1,86 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Lingüísticas</title>
-  <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-  <header>
-    <h1>Lingüísticas</h1>
-    <p>Proyecto de base madre para lenguas y gramáticas</p>
-  </header>
 
-  <main>
-    <article>
-      <h2>Píldora dialectológica</h2>
-      <p>En la variedad colombiana del español se observa una tendencia a emplear la voz <i>verdad</i> como recurso para expresar olvido o falta de memoria. Por ejemplo:
-        <blockquote>
-        Verdad que tienes un dolor de espalda desde hace días… (<cite>Aponte</cite>, <i>Lingüísticas</i>); Ah, ¡verdad que a los políticos de ahora les pagan por cada payasada! (<cite>Quesada</cite>, <i>Relatos</i>).
-        </blockquote>
-        La primera construcción puede interpretarse como <i>Había olvidado que tienes un dolor desde hace días…</i> Este uso convierte <i>verdad</i> en un enunciado no verbal que economiza perífrasis de mayor complejidad. Se registra principalmente en el ámbito informal, especialmente en la lengua hablada.
-      </p>
-      <nav>
-      <ul>
-        <li><a href="prototyping.html">Para ver qué cuestiones de diseño y prueba se están llevando a cabo, sígueme.</a></li>
-      </ul>
+<head>
+    <!-- ĉefa agordo -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lingüísticas</title>
+
+    <!-- bazaj stiloj -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- temaj stiloj -->
+    <link rel="stylesheet" href="css/light.css" media="(prefers-color-scheme: light)">
+    <link rel="stylesheet" href="css/dark.css" media="(prefers-color-scheme: dark)">
+
+    <!-- sintakso-emfazaj temoj -->
+    <link rel="stylesheet" href="css/github.min.css" media="(prefers-color-scheme: light)">
+    <link rel="stylesheet" href="css/github-dark.min.css" media="(prefers-color-scheme: dark)">
+
+    <!-- matematikaj stiloj -->
+    <link rel="stylesheet" href="css/katex.css">
+
+    <!-- navigada menuo -->
+    <link rel="stylesheet" href="css/menu.css">
+</head>
+
+<body>
+    <header>
+        <h1>Lingüísticas</h1>
+        <!-- Hamburger button -->
+        <button class="hamburger" aria-label="Abrir menú">☰</button>
+    </header>
+
+    <!-- Overlay and sliding panel -->
+    <div class="menu-overlay"></div>
+    <nav class="menu-panel">
+        <ul>
+            <li><a href="index.html">Página principal</a></li>
+            <li><a href="agg/agg.html">Atlas del genoma gramatical</a></li>
+            <li><a href="dokumentoj/README.md">Documentación</a></li>
+            <li><a href="about.html">Acerca del proyecto</a></li>
+            <li><a href="contact.html">Contacto</a></li>
+        </ul>
     </nav>
-    </article>
-  </main>
+
+    <main>
+        <section id="intro">
+            <p>Este es el sitio oficial del proyecto <strong>Lingüísticas</strong>. Aquí alojaremos el <i>Atlas</i> y
+                podremos explorar las muchas características que ya tenemos disponibles.</p>
+        </section>
+
+        <section id="features">
+            <h2>Características</h2>
+            <ul>
+                <li><a href="klerigado/programlingvo.html">Lenguajes de programación</a></li>
+                <li><a href="klerigado/ortografio.html">Ortografía</a></li>
+                <li><a href="klerigado/matematiko.html">Matemáticas</a></li>
+                <li><a href="analisis.html">Análisis de obras gramaticales <strong>(Aún no probar. Sin construir:
+                            404)</strong></a></li>
+                <li><a href="tipografia.html">Tipografía <strong>(Aún no probar. Sin construir: 404)</strong></a>
+                </li>
+            </ul>
+        </section>
+
+        <section id="summary">
+            <h2>Resumen</h2>
+            <p>
+                Desde el inicio de esta conversación hemos logrado establecer la infraestructura básica del sitio:
+                integración de <i>Markdown</i> con resaltado de sintaxis y fórmulas matemáticas, estilos temáticos
+                claros para modo claro y oscuro, un menú de navegación accesible con hamburguesa y superposición modal,
+                y la separación entre contenido estático y dinámico para cargar documentos. Todo esto nos acerca a un
+                sistema estable y escalable para el <i>Atlas</i> y el léxico AGG.
+            </p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 AEC</p>
+    </footer>
+
+    <!-- Standalone JS for hamburger -->
+    <script src="risurcoj/menu.js"></script>
 </body>
+
 </html>

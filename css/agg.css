@@ -1,0 +1,41 @@
+#query-section {
+    margin: 2em auto;
+    max-width: 600px;
+    text-align: left;
+}
+
+#query-input {
+    width: 100%;
+    padding: 0.6em;
+    font-size: 1rem;
+    border: 1px solid var(--border-color, #ccc);
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#query-results {
+    margin-top: 1em;
+}
+
+#query-results ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#query-results li {
+    margin: 0.5em 0;
+}
+
+#query-results a {
+    text-decoration: none;
+    color: var(--link-color, #2e7d32);
+    padding: 0.4em 0.6em;
+    display: inline-block;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+#query-results a:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}

@@ -1,0 +1,38 @@
+/* Light theme overrides */
+
+body {
+    background-color: #e8f5e9;
+    /* very light green */
+    color: #222222;
+    /* dark gray text */
+    margin: 0 16px;
+}
+
+header,
+footer {
+    background-color: #c8e6c9;
+    /* pale green */
+    color: #1b5e20;
+    /* deep green text */
+    padding: 1em;
+    text-align: center;
+    margin: 30px 0 0 0;
+}
+
+main {
+    margin: auto;
+}
+
+/* Links */
+a {
+    color: #2e7d32;
+    /* rich green accent */
+    text-decoration: none;
+}
+
+a:hover,
+a:focus {
+    color: #43a047;
+    /* lighter green on hover */
+    text-decoration: underline;
+}
