@@ -22,11 +22,25 @@ document.addEventListener("DOMContentLoaded", () => {
             resultsDiv.innerHTML = "<p style='color:red'>Error loading entries: " + err + "</p>";
         });
 
+    // Normalizes strings by removing diacritics (accents)
+    function normalizeString(str) {
+        return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    }
+
     function renderResults(filter) {
         resultsDiv.innerHTML = "";
-        const filtered = entries.filter(name =>
-            name.toLowerCase().includes(filter.toLowerCase())
-        );
+
+        if (!filter || filter.trim() === "") {
+            return; // Clear results when input is empty
+        }
+
+        const normalizedFilter = normalizeString(filter.toLowerCase());
+
+        const filtered = entries.filter(name => {
+            const normalizedName = normalizeString(name.toLowerCase());
+            return normalizedName.includes(normalizedFilter);
+        });
+
         if (filtered.length === 0) {
             resultsDiv.innerHTML = "<p>No se encontraron resultados.</p>";
             return;
