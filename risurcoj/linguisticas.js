@@ -7567,18 +7567,16 @@
 
 	default_rules.code_inline = function (tokens, idx, options, env, slf) {
 	  const token = tokens[idx];
-
-	  return  '<code' + slf.renderAttrs(token) + '>' +
-	          escapeHtml(token.content) +
-	          '</code>'
+	  return '<code' + slf.renderAttrs(token) + '>' +
+	    escapeHtml(token.content) +
+	    '</code>'
 	};
 
 	default_rules.code_block = function (tokens, idx, options, env, slf) {
 	  const token = tokens[idx];
-
-	  return  '<pre' + slf.renderAttrs(token) + '><code>' +
-	          escapeHtml(tokens[idx].content) +
-	          '</code></pre>\n'
+	  return '<pre' + slf.renderAttrs(token) + '><code>' +
+	    escapeHtml(tokens[idx].content) +
+	    '</code></pre>\n'
 	};
 
 	default_rules.fence = function (tokens, idx, options, env, slf) {
@@ -7604,9 +7602,6 @@
 	    return highlighted + '\n'
 	  }
 
-	  // If language exists, inject class gently, without modifying original token.
-	  // May be, one day we will add .deepClone() for token and simplify this part, but
-	  // now we prefer to keep things local.
 	  if (info) {
 	    const i = token.attrIndex('class');
 	    const tmpAttrs = token.attrs ? token.attrs.slice() : [];
@@ -7618,11 +7613,7 @@
 	      tmpAttrs[i][1] += ' ' + options.langPrefix + langName;
 	    }
 
-	    // Fake token just to render attributes
-	    const tmpToken = {
-	      attrs: tmpAttrs
-	    };
-
+	    const tmpToken = { attrs: tmpAttrs };
 	    return `<pre><code${slf.renderAttrs(tmpToken)}>${highlighted}</code></pre>\n`
 	  }
 
@@ -7631,15 +7622,8 @@
 
 	default_rules.image = function (tokens, idx, options, env, slf) {
 	  const token = tokens[idx];
-
-	  // "alt" attr MUST be set, even if empty. Because it's mandatory and
-	  // should be placed on proper position for tests.
-	  //
-	  // Replace content with actual value
-
 	  token.attrs[token.attrIndex('alt')][1] =
 	    slf.renderInlineAsText(token.children, options, env);
-
 	  return slf.renderToken(tokens, idx, options)
 	};
 
@@ -7663,166 +7647,66 @@
 
 	/**
 	 * new Renderer()
-	 *
-	 * Creates new [[Renderer]] instance and fill [[Renderer#rules]] with defaults.
-	 **/
-	function Renderer () {
-	  /**
-	   * Renderer#rules -> Object
-	   *
-	   * Contains render rules for tokens. Can be updated and extended.
-	   *
-	   * ##### Example
-	   *
-	   * ```javascript
-	   * var md = require('markdown-it')();
-	   *
-	   * md.renderer.rules.strong_open  = function () { return '<b>'; };
-	   * md.renderer.rules.strong_close = function () { return '</b>'; };
-	   *
-	   * var result = md.renderInline(...);
-	   * ```
-	   *
-	   * Each rule is called as independent static function with fixed signature:
-	   *
-	   * ```javascript
-	   * function my_token_render(tokens, idx, options, env, renderer) {
-	   *   // ...
-	   *   return renderedHTML;
-	   * }
-	   * ```
-	   *
-	   * See [source code](https://github.com/markdown-it/markdown-it/blob/master/lib/renderer.mjs)
-	   * for more details and examples.
-	   **/
+	 */
+	function Renderer() {
 	  this.rules = assign$1({}, default_rules);
 	}
 
-	/**
-	 * Renderer.renderAttrs(token) -> String
-	 *
-	 * Render token attributes to string.
-	 **/
-	Renderer.prototype.renderAttrs = function renderAttrs (token) {
-	  let i, l, result;
-
+	Renderer.prototype.renderAttrs = function renderAttrs(token) {
 	  if (!token.attrs) { return '' }
-
-	  result = '';
-
-	  for (i = 0, l = token.attrs.length; i < l; i++) {
-	    result += ' ' + escapeHtml(token.attrs[i][0]) + '="' + escapeHtml(token.attrs[i][1]) + '"';
-	  }
-
-	  return result
+	  return token.attrs.map(attr => ' ' + escapeHtml(attr[0]) + '="' + escapeHtml(attr[1]) + '"').join('')
 	};
 
-	/**
-	 * Renderer.renderToken(tokens, idx, options) -> String
-	 * - tokens (Array): list of tokens
-	 * - idx (Numbed): token index to render
-	 * - options (Object): params of parser instance
-	 *
-	 * Default token renderer. Can be overriden by custom function
-	 * in [[Renderer#rules]].
-	 **/
-	Renderer.prototype.renderToken = function renderToken (tokens, idx, options) {
+	Renderer.prototype.renderToken = function renderToken(tokens, idx, options) {
 	  const token = tokens[idx];
+	  if (token.hidden) return ''
+
 	  let result = '';
-
-	  // Tight list paragraphs
-	  if (token.hidden) {
-	    return ''
-	  }
-
-	  // Insert a newline between hidden paragraph and subsequent opening
-	  // block-level tag.
-	  //
-	  // For example, here we should insert a newline before blockquote:
-	  //  - a
-	  //    >
-	  //
 	  if (token.block && token.nesting !== -1 && idx && tokens[idx - 1].hidden) {
 	    result += '\n';
 	  }
 
-	  // Add token name, e.g. `<img`
 	  result += (token.nesting === -1 ? '</' : '<') + token.tag;
-
-	  // Encode attributes, e.g. `<img src="foo"`
 	  result += this.renderAttrs(token);
 
-	  // Add a slash for self-closing tags, e.g. `<img src="foo" /`
 	  if (token.nesting === 0 && options.xhtmlOut) {
 	    result += ' /';
 	  }
 
-	  // Check if we need to add a newline after this tag
 	  let needLf = false;
 	  if (token.block) {
 	    needLf = true;
-
-	    if (token.nesting === 1) {
-	      if (idx + 1 < tokens.length) {
-	        const nextToken = tokens[idx + 1];
-
-	        if (nextToken.type === 'inline' || nextToken.hidden) {
-	          // Block-level tag containing an inline tag.
-	          //
-	          needLf = false;
-	        } else if (nextToken.nesting === -1 && nextToken.tag === token.tag) {
-	          // Opening tag + closing tag of the same type. E.g. `<li></li>`.
-	          //
-	          needLf = false;
-	        }
+	    if (token.nesting === 1 && idx + 1 < tokens.length) {
+	      const nextToken = tokens[idx + 1];
+	      if (nextToken.type === 'inline' || nextToken.hidden) {
+	        needLf = false;
+	      } else if (nextToken.nesting === -1 && nextToken.tag === token.tag) {
+	        needLf = false;
 	      }
 	    }
 	  }
 
 	  result += needLf ? '>\n' : '>';
-
 	  return result
 	};
 
-	/**
-	 * Renderer.renderInline(tokens, options, env) -> String
-	 * - tokens (Array): list on block tokens to render
-	 * - options (Object): params of parser instance
-	 * - env (Object): additional data from parsed input (references, for example)
-	 *
-	 * The same as [[Renderer.render]], but for single token of `inline` type.
-	 **/
 	Renderer.prototype.renderInline = function (tokens, options, env) {
 	  let result = '';
 	  const rules = this.rules;
-
-	  for (let i = 0, len = tokens.length; i < len; i++) {
+	  for (let i = 0; i < tokens.length; i++) {
 	    const type = tokens[i].type;
-
 	    if (typeof rules[type] !== 'undefined') {
 	      result += rules[type](tokens, i, options, env, this);
 	    } else {
 	      result += this.renderToken(tokens, i, options);
 	    }
 	  }
-
 	  return result
 	};
 
-	/** internal
-	 * Renderer.renderInlineAsText(tokens, options, env) -> String
-	 * - tokens (Array): list on block tokens to render
-	 * - options (Object): params of parser instance
-	 * - env (Object): additional data from parsed input (references, for example)
-	 *
-	 * Special kludge for image `alt` attributes to conform CommonMark spec.
-	 * Don't try to use it! Spec requires to show `alt` content with stripped markup,
-	 * instead of simple escaping.
-	 **/
 	Renderer.prototype.renderInlineAsText = function (tokens, options, env) {
 	  let result = '';
-
-	  for (let i = 0, len = tokens.length; i < len; i++) {
+	  for (let i = 0; i < tokens.length; i++) {
 	    switch (tokens[i].type) {
 	      case 'text':
 	        result += tokens[i].content;
@@ -7838,29 +7722,17 @@
 	      case 'hardbreak':
 	        result += '\n';
 	        break
-	        // all other tokens are skipped
+	      // skip others
 	    }
 	  }
-
 	  return result
 	};
 
-	/**
-	 * Renderer.render(tokens, options, env) -> String
-	 * - tokens (Array): list on block tokens to render
-	 * - options (Object): params of parser instance
-	 * - env (Object): additional data from parsed input (references, for example)
-	 *
-	 * Takes token stream and generates HTML. Probably, you will never need to call
-	 * this method directly.
-	 **/
 	Renderer.prototype.render = function (tokens, options, env) {
 	  let result = '';
 	  const rules = this.rules;
-
-	  for (let i = 0, len = tokens.length; i < len; i++) {
+	  for (let i = 0; i < tokens.length; i++) {
 	    const type = tokens[i].type;
-
 	    if (type === 'inline') {
 	      result += this.renderInline(tokens[i].children, options, env);
 	    } else if (typeof rules[type] !== 'undefined') {
@@ -7869,7 +7741,6 @@
 	      result += this.renderToken(tokens, i, options, env);
 	    }
 	  }
-
 	  return result
 	};
 
@@ -10933,7 +10804,7 @@
 
 	// !!!! Don't confuse with "Markdown ASCII Punctuation" chars
 	// http://spec.commonmark.org/0.15/#ascii-punctuation-character
-	function isTerminatorChar (ch) {
+	function isTerminatorChar(ch) {
 	  switch (ch) {
 	    case 0x0A/* \n */:
 	    case 0x21/* ! */:
@@ -10956,15 +10827,17 @@
 	    case 0x5F/* _ */:
 	    case 0x60/* ` */:
 	    case 0x7B/* { */:
+	    case 0x7C/* | */:
 	    case 0x7D/* } */:
 	    case 0x7E/* ~ */:
+	    case 0xA7/* § */:
 	      return true
 	    default:
 	      return false
 	  }
 	}
 
-	function text$2 (state, silent) {
+	function text$2(state, silent) {
 	  let pos = state.pos;
 
 	  while (pos < state.posMax && !isTerminatorChar(state.src.charCodeAt(pos))) {
@@ -11292,7 +11165,7 @@
 	  return true
 	}
 
-	function postProcess$1 (state, delimiters) {
+	function postProcess$2 (state, delimiters) {
 	  let token;
 	  const loneMarkers = [];
 	  const max = delimiters.length;
@@ -11360,11 +11233,11 @@
 	  const tokens_meta = state.tokens_meta;
 	  const max = state.tokens_meta.length;
 
-	  postProcess$1(state, state.delimiters);
+	  postProcess$2(state, state.delimiters);
 
 	  for (let curr = 0; curr < max; curr++) {
 	    if (tokens_meta[curr] && tokens_meta[curr].delimiters) {
-	      postProcess$1(state, tokens_meta[curr].delimiters);
+	      postProcess$2(state, tokens_meta[curr].delimiters);
 	    }
 	  }
 	}
@@ -11424,7 +11297,7 @@
 	  return true
 	}
 
-	function postProcess (state, delimiters) {
+	function postProcess$1 (state, delimiters) {
 	  const max = delimiters.length;
 
 	  for (let i = max - 1; i >= 0; i--) {
@@ -11484,6 +11357,87 @@
 	  const tokens_meta = state.tokens_meta;
 	  const max = state.tokens_meta.length;
 
+	  postProcess$1(state, state.delimiters);
+
+	  for (let curr = 0; curr < max; curr++) {
+	    if (tokens_meta[curr] && tokens_meta[curr].delimiters) {
+	      postProcess$1(state, tokens_meta[curr].delimiters);
+	    }
+	  }
+	}
+
+	var r_emphasis = {
+	  tokenize: emphasis_tokenize,
+	  postProcess: emphasis_post_process
+	};
+
+	// Parse |text| as small caps, ||text|| as petite caps
+	// Parse §text§ as small caps, §§text§§ as petite caps
+
+	function smallcaps_tokenize(state, silent) {
+	  const marker = state.src.charCodeAt(state.pos);
+	  if (silent) return false;
+	  if (marker !== 0x7C && marker !== 0xA7) return false; // | or §
+
+	  // Count consecutive markers
+	  let count = 0;
+	  while (state.src.charCodeAt(state.pos + count) === marker) {
+	    count++;
+	  }
+
+	  for (let i = 0; i < count; i++) {
+	    const token = state.push('text', '', 0);
+	    token.content = String.fromCharCode(marker);
+
+	    state.delimiters.push({
+	      marker,
+	      length: count,
+	      token: state.tokens.length - 1,
+	      end: -1,
+	      open: true,
+	      close: true
+	    });
+	  }
+
+	  state.pos += count;
+	  return true;
+	}
+
+	function postProcess(state, delimiters) {
+	  const max = delimiters.length;
+
+	  for (let i = max - 1; i >= 0; i--) {
+	    const startDelim = delimiters[i];
+	    if (startDelim.marker !== 0x7C && startDelim.marker !== 0xA7) continue;
+	    if (startDelim.end === -1) continue;
+
+	    const endDelim = delimiters[startDelim.end];
+	    const ch = String.fromCharCode(startDelim.marker);
+
+	    // Decide small vs petite caps based on length
+	    const isSmall = startDelim.length === 1;
+
+	    const token_o = state.tokens[startDelim.token];
+	    token_o.type = isSmall ? 'smallcaps_open' : 'petitcaps_open';
+	    token_o.tag = 'span';
+	    token_o.attrs = [['style', isSmall ? 'font-variant: small-caps;' : 'font-variant: petite-caps;']];
+	    token_o.nesting = 1;
+	    token_o.markup = isSmall ? ch : ch + ch;
+	    token_o.content = '';
+
+	    const token_c = state.tokens[endDelim.token];
+	    token_c.type = isSmall ? 'smallcaps_close' : 'petitcaps_close';
+	    token_c.tag = 'span';
+	    token_c.nesting = -1;
+	    token_c.markup = isSmall ? ch : ch + ch;
+	    token_c.content = '';
+	  }
+	}
+
+	function smallcaps_post_process(state) {
+	  const tokens_meta = state.tokens_meta;
+	  const max = tokens_meta.length;
+
 	  postProcess(state, state.delimiters);
 
 	  for (let curr = 0; curr < max; curr++) {
@@ -11493,9 +11447,9 @@
 	  }
 	}
 
-	var r_emphasis = {
-	  tokenize: emphasis_tokenize,
-	  postProcess: emphasis_post_process
+	var r_smallcaps = {
+	  tokenize: smallcaps_tokenize,
+	  postProcess: smallcaps_post_process
 	};
 
 	// Process [link](<to> "stuff")
@@ -12122,18 +12076,19 @@
 	// Parser rules
 
 	const _rules = [
-	  ['text',            text$2],
-	  ['linkify',         linkify],
-	  ['newline',         newline],
-	  ['escape',          escape$1],
-	  ['backticks',       backtick],
-	  ['strikethrough',   r_strikethrough.tokenize],
-	  ['emphasis',        r_emphasis.tokenize],
-	  ['link',            link],
-	  ['image',           image],
-	  ['autolink',        autolink],
-	  ['html_inline',     html_inline],
-	  ['entity',          entity]
+	  ['text', text$2],
+	  ['linkify', linkify],
+	  ['newline', newline],
+	  ['escape', escape$1],
+	  ['backticks', backtick],
+	  ['strikethrough', r_strikethrough.tokenize],
+	  ['emphasis', r_emphasis.tokenize],
+	  ['smallcaps', r_smallcaps.tokenize],
+	  ['link', link],
+	  ['image', image],
+	  ['autolink', autolink],
+	  ['html_inline', html_inline],
+	  ['entity', entity]
 	];
 
 	// `rule2` ruleset was created specifically for emphasis/strikethrough
@@ -12142,18 +12097,19 @@
 	// Don't use this for anything except pairs (plugins working with `balance_pairs`).
 	//
 	const _rules2 = [
-	  ['balance_pairs',   link_pairs],
-	  ['strikethrough',   r_strikethrough.postProcess],
-	  ['emphasis',        r_emphasis.postProcess],
+	  ['balance_pairs', link_pairs],
+	  ['strikethrough', r_strikethrough.postProcess],
+	  ['emphasis', r_emphasis.postProcess],
+	  ['smallcaps', r_smallcaps.postProcess],
 	  // rules for pairs separate '**' into its own text tokens, which may be left unused,
 	  // rule below merges unused segments back with the rest of the text
-	  ['fragments_join',  fragments_join]
+	  ['fragments_join', fragments_join]
 	];
 
 	/**
 	 * new ParserInline()
 	 **/
-	function ParserInline () {
+	function ParserInline() {
 	  /**
 	   * ParserInline#ruler -> Ruler
 	   *
@@ -13765,13 +13721,109 @@
 	  }
 	};
 
+	var cfg_linguisticas = {
+	    options: {
+	        // Ebligi HTML-etikedojn en fonto
+	        html: false,
+
+	        // Uzi '/' por fermi ununurajn etikedojn (<br />)
+	        xhtmlOut: false,
+
+	        // Konverti '\n'-ojn en alineoj al <br>
+	        breaks: false,
+
+	        // CSS-lingva prefikso por baritaj blokoj
+	        langPrefix: 'language-',
+
+	        // aŭtomate konverti URL-similajn tekstojn al ligiloj
+	        linkify: false,
+
+	        // Ebligi iujn lingvo-neŭtralajn anstataŭigojn + beligadon de citiloj
+	        typographer: true,
+
+	        // Paroj da anstataŭigoj por duoblaj kaj ununuraj citiloj kiam typographer
+	        // estas ebligita kaj inteligentaj citiloj estas ŝaltitaj. Eblas uzi Ĉenon (String) aŭ Tabelon (Array).
+	        //
+	        // Ekzemple, vi povas uzi '«»„“' por la rusa, '„“‚‘' por la germana,
+	        // kaj ['«\xA0', '\xA0»', '‹\xA0', '\xA0›'] por la franca.
+	        quotes: '\u00ab\u00bb\u2018\u2019', /* «»‘’ */
+
+	        // Elstarigilo. Devas redoni eskapitan HTML,
+	        // aŭ '' se la fontĉeno ne estas ŝanĝita kaj devas esti eskapita ekstere.
+	        // Se la rezulto komenciĝas per <pre... la interna ujo estas preterlasita.
+	        //
+	        // function (/*str, lang*/) { return ''; }
+	        //
+	        highlight: null,
+
+	        // Interna protekto, maksimuma profundo de nesto
+	        maxNesting: 100
+	    },
+	    components: {
+	        core: {
+	            rules: [
+	                'normalize',
+	                'block',
+	                'inline',
+	                'linkify',
+	                'replacements',
+	                'smartquotes',
+	                'text_join'
+	                // <-- Ni povas injekti proprajn kernajn regulojn ĉi tie
+	            ]
+	        },
+	        block: {
+	            rules: [
+	                'table',
+	                'code',
+	                'fence',
+	                'blockquote',
+	                'hr',
+	                'list',
+	                'reference',
+	                'html_block',
+	                'heading',
+	                'lheading',
+	                'paragraph'
+	                // <-- Ni povas injekti proprajn blokajn regulojn ĉi tie
+	            ]
+	        },
+	        inline: {
+	            rules: [
+	                'text',
+	                'linkify',
+	                'newline',
+	                'escape',
+	                'backticks',
+	                'strikethrough',
+	                'emphasis',
+	                'smallcaps',
+	                'link',
+	                'image',
+	                'autolink',
+	                'html_inline',
+	                'entity'
+	                // <-- Ni povas injekti proprajn enliniajn regulojn ĉi tie
+	            ],
+	            rules2: [
+	                'balance_pairs',
+	                'strikethrough',
+	                'emphasis',
+	                'smallcaps',
+	                'fragments_join'
+	            ]
+	        }
+	    }
+	};
+
 	// Main parser class
 
 
 	const config = {
 	  default: cfg_default,
 	  zero: cfg_zero,
-	  commonmark: cfg_commonmark
+	  commonmark: cfg_commonmark,
+	  linguisticas: cfg_linguisticas
 	};
 
 	//
@@ -13785,7 +13837,7 @@
 	const BAD_PROTO_RE = /^(vbscript|javascript|file|data):/;
 	const GOOD_DATA_RE = /^data:image\/(gif|png|jpeg|webp);/;
 
-	function validateLink (url) {
+	function validateLink(url) {
 	  // url should be normalized at this point, and existing entities are decoded
 	  const str = url.trim().toLowerCase();
 
@@ -13794,7 +13846,7 @@
 
 	const RECODE_HOSTNAME_FOR = ['http:', 'https:', 'mailto:'];
 
-	function normalizeLink (url) {
+	function normalizeLink(url) {
 	  const parsed = urlParse(url, true);
 
 	  if (parsed.hostname) {
@@ -13814,7 +13866,7 @@
 	  return encode$1(format(parsed))
 	}
 
-	function normalizeLinkText (url) {
+	function normalizeLinkText(url) {
 	  const parsed = urlParse(url, true);
 
 	  if (parsed.hostname) {
@@ -13968,7 +14020,7 @@
 	 * ```
 	 *
 	 **/
-	function MarkdownIt (presetName, options) {
+	function MarkdownIt(presetName, options) {
 	  if (!(this instanceof MarkdownIt)) {
 	    return new MarkdownIt(presetName, options)
 	  }
