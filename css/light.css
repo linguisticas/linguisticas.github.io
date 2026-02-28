@@ -38,6 +38,7 @@ a:focus {
 /* Code block theming */
 .code-block {
     border: 1px solid #ddd;
+    background-color: #ddf0dd;
 }
 
 .code-header {
