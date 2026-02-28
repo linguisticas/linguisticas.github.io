@@ -14,8 +14,6 @@ footer {
     /* deep green */
     color: #caf3cc;
     /* pale green text */
-    padding: 1em;
-    text-align: center;
     margin: 30px 0 0 0;
 }
 
@@ -35,4 +33,23 @@ a:focus {
     color: #7fffb3;
     /* lighter green on hover */
     text-decoration: underline;
+}
+
+/* Code block theming */
+.code-block {
+    border: 1px solid #0b2513;
+}
+
+.code-header {
+    background: #0e2714;
+    border-bottom: 1px solid #0b2513;
+}
+
+.code-lang {
+    color: #caf3cc;
+}
+
+.copy-btn {
+    color: #4de68a;
+    /* green accent for button */
 }
