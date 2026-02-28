@@ -37,19 +37,22 @@ a:focus {
 
 /* Code block theming */
 .code-block {
-    border: 1px solid #0b2513;
+    border: 1px solid #034d0c;
+    /* forest green border */
 }
 
 .code-header {
-    background: #0e2714;
-    border-bottom: 1px solid #0b2513;
+    background: #052007;
+    /* moss green header */
+    border-bottom: 1px solid #034d0c;
 }
 
 .code-lang {
     color: #caf3cc;
+    /* pale mint text */
 }
 
 .copy-btn {
     color: #4de68a;
-    /* green accent for button */
+    /* bright green accent */
 }
