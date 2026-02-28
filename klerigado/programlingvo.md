@@ -90,7 +90,30 @@ int main() {
 </body>
 </html>
 ```
+## CSS
 
+```css
+pre,
+code,
+pre code {
+    font-family: 'Cascadia Code',
+        'SF Mono',
+        Consolas,
+        'Roboto Mono',
+        'Ubuntu Mono',
+        'Liberation Mono',
+        Menlo,
+        Monaco,
+        'Courier New',
+        monospace;
+    white-space: pre-wrap;
+    /* preserve whitespace but allow wrapping */
+    word-wrap: break-word;
+    /* break long words if needed */
+    overflow-wrap: break-word;
+    /* modern equivalent */
+}
+```
 ## SQL
 ```sql
 BEGIN TRANSACTION;
