@@ -7567,18 +7567,16 @@
 
 	default_rules.code_inline = function (tokens, idx, options, env, slf) {
 	  const token = tokens[idx];
-
-	  return  '<code' + slf.renderAttrs(token) + '>' +
-	          escapeHtml(token.content) +
-	          '</code>'
+	  return '<code' + slf.renderAttrs(token) + '>' +
+	    escapeHtml(token.content) +
+	    '</code>'
 	};
 
 	default_rules.code_block = function (tokens, idx, options, env, slf) {
 	  const token = tokens[idx];
-
-	  return  '<pre' + slf.renderAttrs(token) + '><code>' +
-	          escapeHtml(tokens[idx].content) +
-	          '</code></pre>\n'
+	  return '<pre' + slf.renderAttrs(token) + '><code>' +
+	    escapeHtml(tokens[idx].content) +
+	    '</code></pre>\n'
 	};
 
 	default_rules.fence = function (tokens, idx, options, env, slf) {
@@ -7604,9 +7602,6 @@
 	    return highlighted + '\n'
 	  }
 
-	  // If language exists, inject class gently, without modifying original token.
-	  // May be, one day we will add .deepClone() for token and simplify this part, but
-	  // now we prefer to keep things local.
 	  if (info) {
 	    const i = token.attrIndex('class');
 	    const tmpAttrs = token.attrs ? token.attrs.slice() : [];
@@ -7618,11 +7613,7 @@
 	      tmpAttrs[i][1] += ' ' + options.langPrefix + langName;
 	    }
 
-	    // Fake token just to render attributes
-	    const tmpToken = {
-	      attrs: tmpAttrs
-	    };
-
+	    const tmpToken = { attrs: tmpAttrs };
 	    return `<pre><code${slf.renderAttrs(tmpToken)}>${highlighted}</code></pre>\n`
 	  }
 
@@ -7631,15 +7622,8 @@
 
 	default_rules.image = function (tokens, idx, options, env, slf) {
 	  const token = tokens[idx];
-
-	  // "alt" attr MUST be set, even if empty. Because it's mandatory and
-	  // should be placed on proper position for tests.
-	  //
-	  // Replace content with actual value
-
 	  token.attrs[token.attrIndex('alt')][1] =
 	    slf.renderInlineAsText(token.children, options, env);
-
 	  return slf.renderToken(tokens, idx, options)
 	};
 
@@ -7663,166 +7647,66 @@
 
 	/**
 	 * new Renderer()
-	 *
-	 * Creates new [[Renderer]] instance and fill [[Renderer#rules]] with defaults.
-	 **/
-	function Renderer () {
-	  /**
-	   * Renderer#rules -> Object
-	   *
-	   * Contains render rules for tokens. Can be updated and extended.
-	   *
-	   * ##### Example
-	   *
-	   * ```javascript
-	   * var md = require('markdown-it')();
-	   *
-	   * md.renderer.rules.strong_open  = function () { return '<b>'; };
-	   * md.renderer.rules.strong_close = function () { return '</b>'; };
-	   *
-	   * var result = md.renderInline(...);
-	   * ```
-	   *
-	   * Each rule is called as independent static function with fixed signature:
-	   *
-	   * ```javascript
-	   * function my_token_render(tokens, idx, options, env, renderer) {
-	   *   // ...
-	   *   return renderedHTML;
-	   * }
-	   * ```
-	   *
-	   * See [source code](https://github.com/markdown-it/markdown-it/blob/master/lib/renderer.mjs)
-	   * for more details and examples.
-	   **/
+	 */
+	function Renderer() {
 	  this.rules = assign$1({}, default_rules);
 	}
 
-	/**
-	 * Renderer.renderAttrs(token) -> String
-	 *
-	 * Render token attributes to string.
-	 **/
-	Renderer.prototype.renderAttrs = function renderAttrs (token) {
-	  let i, l, result;
-
+	Renderer.prototype.renderAttrs = function renderAttrs(token) {
 	  if (!token.attrs) { return '' }
-
-	  result = '';
-
-	  for (i = 0, l = token.attrs.length; i < l; i++) {
-	    result += ' ' + escapeHtml(token.attrs[i][0]) + '="' + escapeHtml(token.attrs[i][1]) + '"';
-	  }
-
-	  return result
+	  return token.attrs.map(attr => ' ' + escapeHtml(attr[0]) + '="' + escapeHtml(attr[1]) + '"').join('')
 	};
 
-	/**
-	 * Renderer.renderToken(tokens, idx, options) -> String
-	 * - tokens (Array): list of tokens
-	 * - idx (Numbed): token index to render
-	 * - options (Object): params of parser instance
-	 *
-	 * Default token renderer. Can be overriden by custom function
-	 * in [[Renderer#rules]].
-	 **/
-	Renderer.prototype.renderToken = function renderToken (tokens, idx, options) {
+	Renderer.prototype.renderToken = function renderToken(tokens, idx, options) {
 	  const token = tokens[idx];
+	  if (token.hidden) return ''
+
 	  let result = '';
-
-	  // Tight list paragraphs
-	  if (token.hidden) {
-	    return ''
-	  }
-
-	  // Insert a newline between hidden paragraph and subsequent opening
-	  // block-level tag.
-	  //
-	  // For example, here we should insert a newline before blockquote:
-	  //  - a
-	  //    >
-	  //
 	  if (token.block && token.nesting !== -1 && idx && tokens[idx - 1].hidden) {
 	    result += '\n';
 	  }
 
-	  // Add token name, e.g. `<img`
 	  result += (token.nesting === -1 ? '</' : '<') + token.tag;
-
-	  // Encode attributes, e.g. `<img src="foo"`
 	  result += this.renderAttrs(token);
 
-	  // Add a slash for self-closing tags, e.g. `<img src="foo" /`
 	  if (token.nesting === 0 && options.xhtmlOut) {
 	    result += ' /';
 	  }
 
-	  // Check if we need to add a newline after this tag
 	  let needLf = false;
 	  if (token.block) {
 	    needLf = true;
-
-	    if (token.nesting === 1) {
-	      if (idx + 1 < tokens.length) {
-	        const nextToken = tokens[idx + 1];
-
-	        if (nextToken.type === 'inline' || nextToken.hidden) {
-	          // Block-level tag containing an inline tag.
-	          //
-	          needLf = false;
-	        } else if (nextToken.nesting === -1 && nextToken.tag === token.tag) {
-	          // Opening tag + closing tag of the same type. E.g. `<li></li>`.
-	          //
-	          needLf = false;
-	        }
+	    if (token.nesting === 1 && idx + 1 < tokens.length) {
+	      const nextToken = tokens[idx + 1];
+	      if (nextToken.type === 'inline' || nextToken.hidden) {
+	        needLf = false;
+	      } else if (nextToken.nesting === -1 && nextToken.tag === token.tag) {
+	        needLf = false;
 	      }
 	    }
 	  }
 
 	  result += needLf ? '>\n' : '>';
-
 	  return result
 	};
 
-	/**
-	 * Renderer.renderInline(tokens, options, env) -> String
-	 * - tokens (Array): list on block tokens to render
-	 * - options (Object): params of parser instance
-	 * - env (Object): additional data from parsed input (references, for example)
-	 *
-	 * The same as [[Renderer.render]], but for single token of `inline` type.
-	 **/
 	Renderer.prototype.renderInline = function (tokens, options, env) {
 	  let result = '';
 	  const rules = this.rules;
-
-	  for (let i = 0, len = tokens.length; i < len; i++) {
+	  for (let i = 0; i < tokens.length; i++) {
 	    const type = tokens[i].type;
-
 	    if (typeof rules[type] !== 'undefined') {
 	      result += rules[type](tokens, i, options, env, this);
 	    } else {
 	      result += this.renderToken(tokens, i, options);
 	    }
 	  }
-
 	  return result
 	};
 
-	/** internal
-	 * Renderer.renderInlineAsText(tokens, options, env) -> String
-	 * - tokens (Array): list on block tokens to render
-	 * - options (Object): params of parser instance
-	 * - env (Object): additional data from parsed input (references, for example)
-	 *
-	 * Special kludge for image `alt` attributes to conform CommonMark spec.
-	 * Don't try to use it! Spec requires to show `alt` content with stripped markup,
-	 * instead of simple escaping.
-	 **/
 	Renderer.prototype.renderInlineAsText = function (tokens, options, env) {
 	  let result = '';
-
-	  for (let i = 0, len = tokens.length; i < len; i++) {
+	  for (let i = 0; i < tokens.length; i++) {
 	    switch (tokens[i].type) {
 	      case 'text':
 	        result += tokens[i].content;
@@ -7838,29 +7722,17 @@
 	      case 'hardbreak':
 	        result += '\n';
 	        break
-	        // all other tokens are skipped
+	      // skip others
 	    }
 	  }
-
 	  return result
 	};
 
-	/**
-	 * Renderer.render(tokens, options, env) -> String
-	 * - tokens (Array): list on block tokens to render
-	 * - options (Object): params of parser instance
-	 * - env (Object): additional data from parsed input (references, for example)
-	 *
-	 * Takes token stream and generates HTML. Probably, you will never need to call
-	 * this method directly.
-	 **/
 	Renderer.prototype.render = function (tokens, options, env) {
 	  let result = '';
 	  const rules = this.rules;
-
-	  for (let i = 0, len = tokens.length; i < len; i++) {
+	  for (let i = 0; i < tokens.length; i++) {
 	    const type = tokens[i].type;
-
 	    if (type === 'inline') {
 	      result += this.renderInline(tokens[i].children, options, env);
 	    } else if (typeof rules[type] !== 'undefined') {
@@ -7869,7 +7741,6 @@
 	      result += this.renderToken(tokens, i, options, env);
 	    }
 	  }
-
 	  return result
 	};
 
@@ -8605,60 +8476,49 @@
 	// ???????? → ???, !!!!! → !!!, `,,` → `,`
 	// -- → &ndash;, --- → &mdash;
 	//
+
 	// TODO:
 	// - fractionals 1/2, 1/4, 3/4 -> ½, ¼, ¾
 	// - multiplications 2 x 4 -> 2 × 4
 
-	// Regex to detect "rare" replacements in text.
-	// Matches: "+-", ".." (two or more dots), "????" (four or more ?),
-	// "!!!!" (four or more !), and "--" (double dash).
-	// Note: we removed `,,` here to preserve double commas.
-	const RARE_RE = /\+-|\.\.|,,|\?\?\?\?|!!!!|--/;
+	const RARE_RE = /\+-|\.\.|\?\?\?\?|!!!!|,,|--/;
 
-	// Regex to detect scoped abbreviations like (c), (tm), (r).
-	// TEST_RE is case-insensitive, used just to check if content has them.
+	// Workaround for phantomjs - need regex without /g flag,
+	// or root check will fail every second time
 	const SCOPED_ABBR_TEST_RE = /\((c|tm|r)\)/i;
 
-	// Actual replacement regex, global + case-insensitive.
 	const SCOPED_ABBR_RE = /\((c|tm|r)\)/ig;
-
-	// Mapping table for abbreviations.
 	const SCOPED_ABBR = {
 	  c: '©',
 	  r: '®',
 	  tm: '™'
 	};
 
-	// Replacement function: takes match and abbreviation name,
-	// returns the corresponding symbol.
-	function replaceFn(match, name) {
+	function replaceFn (match, name) {
 	  return SCOPED_ABBR[name.toLowerCase()]
 	}
 
-	// Replace scoped abbreviations inside inline tokens.
-	function replace_scoped(inlineTokens) {
+	function replace_scoped (inlineTokens) {
 	  let inside_autolink = 0;
 
 	  for (let i = inlineTokens.length - 1; i >= 0; i--) {
 	    const token = inlineTokens[i];
 
-	    // Only process plain text, not inside auto-links.
 	    if (token.type === 'text' && !inside_autolink) {
 	      token.content = token.content.replace(SCOPED_ABBR_RE, replaceFn);
 	    }
 
-	    // Track whether we are inside an auto-link.
 	    if (token.type === 'link_open' && token.info === 'auto') {
 	      inside_autolink--;
 	    }
+
 	    if (token.type === 'link_close' && token.info === 'auto') {
 	      inside_autolink++;
 	    }
 	  }
 	}
 
-	// Replace "rare" typographic sequences.
-	function replace_rare(inlineTokens) {
+	function replace_rare (inlineTokens) {
 	  let inside_autolink = 0;
 
 	  for (let i = inlineTokens.length - 1; i >= 0; i--) {
@@ -8667,37 +8527,30 @@
 	    if (token.type === 'text' && !inside_autolink) {
 	      if (RARE_RE.test(token.content)) {
 	        token.content = token.content
-	          // "+-" → ±
 	          .replace(/\+-/g, '±')
-	          // Two or more dots → ellipsis (…)
-	          // But if preceded by ? or !, collapse to ".."
+	          // .., ..., ....... -> …
+	          // but ?..... & !..... -> ?.. & !..
 	          .replace(/\.{2,}/g, '…').replace(/([?!])…/g, '$1..')
-	          // Four or more ? or ! → collapse to three
-	          .replace(/([?!]){4,}/g, '$1$1$1')
-	          // Multiple commas → single comma
-	          // (comment out if you want to keep ,, untouched)
-	          //.replace(/,{2,}/g, ',')
-	          // --- → em-dash (—)
+	          .replace(/([?!]){4,}/g, '$1$1$1').replace(/,{2,}/g, ',')
+	          // em-dash
 	          .replace(/(^|[^-])---(?=[^-]|$)/mg, '$1\u2014')
-	          // -- surrounded by spaces → en-dash (–)
+	          // en-dash
 	          .replace(/(^|\s)--(?=\s|$)/mg, '$1\u2013')
-	          // -- between non-space chars → en-dash (–)
 	          .replace(/(^|[^-\s])--(?=[^-\s]|$)/mg, '$1\u2013');
 	      }
 	    }
 
-	    // Track auto-link context.
 	    if (token.type === 'link_open' && token.info === 'auto') {
 	      inside_autolink--;
 	    }
+
 	    if (token.type === 'link_close' && token.info === 'auto') {
 	      inside_autolink++;
 	    }
 	  }
 	}
 
-	// Main entry point: runs replacements if typographer is enabled.
-	function replace(state) {
+	function replace (state) {
 	  let blkIdx;
 
 	  if (!state.md.options.typographer) { return }
@@ -8705,12 +8558,10 @@
 	  for (blkIdx = state.tokens.length - 1; blkIdx >= 0; blkIdx--) {
 	    if (state.tokens[blkIdx].type !== 'inline') { continue }
 
-	    // Replace abbreviations like (c), (tm), (r).
 	    if (SCOPED_ABBR_TEST_RE.test(state.tokens[blkIdx].content)) {
 	      replace_scoped(state.tokens[blkIdx].children);
 	    }
 
-	    // Replace rare sequences like "+-", "..", "!!!!", "--".
 	    if (RARE_RE.test(state.tokens[blkIdx].content)) {
 	      replace_rare(state.tokens[blkIdx].children);
 	    }
@@ -10976,10 +10827,10 @@
 	    case 0x5F/* _ */:
 	    case 0x60/* ` */:
 	    case 0x7B/* { */:
-	    case 0x7C/* | */:   // 👈 added
+	    case 0x7C/* | */:
 	    case 0x7D/* } */:
 	    case 0x7E/* ~ */:
-	    case 0xA7/* § */:   // 👈 added
+	    case 0xA7/* § */:
 	      return true
 	    default:
 	      return false
@@ -11520,6 +11371,87 @@
 	  postProcess: emphasis_post_process
 	};
 
+	// Parse |text| as small caps, ||text|| as petite caps
+	// Parse §text§ as small caps, §§text§§ as petite caps
+
+	function smallcaps_tokenize(state, silent) {
+	  const marker = state.src.charCodeAt(state.pos);
+	  if (silent) return false;
+	  if (marker !== 0x7C && marker !== 0xA7) return false; // | or §
+
+	  // Count consecutive markers
+	  let count = 0;
+	  while (state.src.charCodeAt(state.pos + count) === marker) {
+	    count++;
+	  }
+
+	  for (let i = 0; i < count; i++) {
+	    const token = state.push('text', '', 0);
+	    token.content = String.fromCharCode(marker);
+
+	    state.delimiters.push({
+	      marker,
+	      length: count,
+	      token: state.tokens.length - 1,
+	      end: -1,
+	      open: true,
+	      close: true
+	    });
+	  }
+
+	  state.pos += count;
+	  return true;
+	}
+
+	function postProcess(state, delimiters) {
+	  const max = delimiters.length;
+
+	  for (let i = max - 1; i >= 0; i--) {
+	    const startDelim = delimiters[i];
+	    if (startDelim.marker !== 0x7C && startDelim.marker !== 0xA7) continue;
+	    if (startDelim.end === -1) continue;
+
+	    const endDelim = delimiters[startDelim.end];
+	    const ch = String.fromCharCode(startDelim.marker);
+
+	    // Decide small vs petite caps based on length
+	    const isSmall = startDelim.length === 1;
+
+	    const token_o = state.tokens[startDelim.token];
+	    token_o.type = isSmall ? 'smallcaps_open' : 'petitcaps_open';
+	    token_o.tag = 'span';
+	    token_o.attrs = [['style', isSmall ? 'font-variant: small-caps;' : 'font-variant: petite-caps;']];
+	    token_o.nesting = 1;
+	    token_o.markup = isSmall ? ch : ch + ch;
+	    token_o.content = '';
+
+	    const token_c = state.tokens[endDelim.token];
+	    token_c.type = isSmall ? 'smallcaps_close' : 'petitcaps_close';
+	    token_c.tag = 'span';
+	    token_c.nesting = -1;
+	    token_c.markup = isSmall ? ch : ch + ch;
+	    token_c.content = '';
+	  }
+	}
+
+	function smallcaps_post_process(state) {
+	  const tokens_meta = state.tokens_meta;
+	  const max = tokens_meta.length;
+
+	  postProcess(state, state.delimiters);
+
+	  for (let curr = 0; curr < max; curr++) {
+	    if (tokens_meta[curr] && tokens_meta[curr].delimiters) {
+	      postProcess(state, tokens_meta[curr].delimiters);
+	    }
+	  }
+	}
+
+	var r_smallcaps = {
+	  tokenize: smallcaps_tokenize,
+	  postProcess: smallcaps_post_process
+	};
+
 	// Process [link](<to> "stuff")
 
 
@@ -11970,115 +11902,6 @@
 	  return false
 	}
 
-	// Process |this| and §that§
-	//
-
-	// Insert each marker as a separate text token, and add it to delimiter list
-	//
-	function smallcaps_tokenize(state, silent) {
-	  const start = state.pos;
-	  const marker = state.src.charCodeAt(start);
-
-	  if (silent) { return false }
-
-	  if (marker !== 0x7C /* | */ && marker !== 0xA7 /* § */) { return false }
-
-	  const scanned = state.scanDelims(state.pos, false);
-
-	  for (let i = 0; i < scanned.length; i++) {
-	    const token = state.push('text', '', 0);
-	    token.content = String.fromCharCode(marker);
-
-	    state.delimiters.push({
-	      marker,
-	      length: scanned.length,
-	      token: state.tokens.length - 1,
-	      end: -1,
-	      open: scanned.can_open,
-	      close: scanned.can_close
-	    });
-	  }
-
-	  state.pos += scanned.length;
-
-	  return true
-	}
-
-	function postProcess(state, delimiters) {
-	  const max = delimiters.length;
-
-	  for (let i = max - 1; i >= 0; i--) {
-	    const startDelim = delimiters[i];
-
-	    if (startDelim.marker !== 0x7C /* | */ && startDelim.marker !== 0xA7 /* § */) {
-	      continue
-	    }
-
-	    // Process only opening markers
-	    if (startDelim.end === -1) {
-	      continue
-	    }
-
-	    const endDelim = delimiters[startDelim.end];
-
-	    // If the previous delimiter has the same marker and is adjacent to this one,
-	    // merge those into one strong delimiter.
-	    //
-	    // `<span><span>whatever</span></span>` -> `<span style="color:red">whatever</span>`
-	    //
-	    const isStrong = i > 0 &&
-	      delimiters[i - 1].end === startDelim.end + 1 &&
-	      delimiters[i - 1].marker === startDelim.marker &&
-	      delimiters[i - 1].token === startDelim.token - 1 &&
-	      delimiters[startDelim.end + 1].token === endDelim.token + 1;
-
-	    const ch = String.fromCharCode(startDelim.marker);
-
-	    const token_o = state.tokens[startDelim.token];
-	    token_o.type = isStrong ? 'smallcaps_strong_open' : 'smallcaps_open';
-	    token_o.tag = 'span';
-	    token_o.nesting = 1;
-	    token_o.markup = isStrong ? ch + ch : ch;
-	    token_o.attrs = isStrong
-	      ? [['style', 'font-variant: petite-caps;']]
-	      : [['style', 'font-variant: small-caps;']];
-	    token_o.content = '';
-
-	    const token_c = state.tokens[endDelim.token];
-	    token_c.type = isStrong ? 'smallcaps_strong_close' : 'smallcaps_close';
-	    token_c.tag = 'span';
-	    token_c.nesting = -1;
-	    token_c.markup = isStrong ? ch + ch : ch;
-	    token_c.content = '';
-
-	    if (isStrong) {
-	      state.tokens[delimiters[i - 1].token].content = '';
-	      state.tokens[delimiters[startDelim.end + 1].token].content = '';
-	      i--;
-	    }
-	  }
-	}
-
-	// Walk through delimiter list and replace text tokens with tags
-	//
-	function smallcaps_post_process(state) {
-	  const tokens_meta = state.tokens_meta;
-	  const max = state.tokens_meta.length;
-
-	  postProcess(state, state.delimiters);
-
-	  for (let curr = 0; curr < max; curr++) {
-	    if (tokens_meta[curr] && tokens_meta[curr].delimiters) {
-	      postProcess(state, tokens_meta[curr].delimiters);
-	    }
-	  }
-	}
-
-	var r_smallcaps = {
-	  tokenize: smallcaps_tokenize,
-	  postProcess: smallcaps_post_process
-	};
-
 	// For each opening emphasis-like marker find a matching closing one
 	//
 
@@ -12260,13 +12083,12 @@
 	  ['backticks', backtick],
 	  ['strikethrough', r_strikethrough.tokenize],
 	  ['emphasis', r_emphasis.tokenize],
+	  ['smallcaps', r_smallcaps.tokenize],
 	  ['link', link],
 	  ['image', image],
 	  ['autolink', autolink],
 	  ['html_inline', html_inline],
-	  ['entity', entity],
-	  // 👇 register smallcaps tokenizer
-	  ['smallcaps', r_smallcaps.tokenize]
+	  ['entity', entity]
 	];
 
 	// `rule2` ruleset was created specifically for emphasis/strikethrough
@@ -12278,13 +12100,10 @@
 	  ['balance_pairs', link_pairs],
 	  ['strikethrough', r_strikethrough.postProcess],
 	  ['emphasis', r_emphasis.postProcess],
-	  // Rule is working
 	  ['smallcaps', r_smallcaps.postProcess],
 	  // rules for pairs separate '**' into its own text tokens, which may be left unused,
 	  // rule below merges unused segments back with the rest of the text
 	  ['fragments_join', fragments_join]
-	  // 👇 optional: add postProcess if your rule needs it
-
 	];
 
 	/**
@@ -12334,6 +12153,10 @@
 
 	  if (state.level < maxNesting) {
 	    for (let i = 0; i < len; i++) {
+	      // Increment state.level and decrement it later to limit recursion.
+	      // It's harmless to do here, because no tokens are created. But ideally,
+	      // we'd need a separate private state variable for this purpose.
+	      //
 	      state.level++;
 	      ok = rules[i](state, true);
 	      state.level--;
@@ -12344,6 +12167,17 @@
 	      }
 	    }
 	  } else {
+	    // Too much nesting, just skip until the end of the paragraph.
+	    //
+	    // NOTE: this will cause links to behave incorrectly in the following case,
+	    //       when an amount of `[` is exactly equal to `maxNesting + 1`:
+	    //
+	    //       [[[[[[[[[[[[[[[[[[[[[foo]()
+	    //
+	    // TODO: remove this workaround when CM standard will allow nested links
+	    //       (we can replace it by preventing links from being parsed in
+	    //       validation mode)
+	    //
 	    state.pos = state.posMax;
 	  }
 
@@ -12360,6 +12194,12 @@
 	  const maxNesting = state.md.options.maxNesting;
 
 	  while (state.pos < end) {
+	    // Try all possible rules.
+	    // On success, rule should:
+	    //
+	    // - update `state.pos`
+	    // - update `state.tokens`
+	    // - return true
 	    const prevPos = state.pos;
 	    let ok = false;
 
@@ -13717,13 +13557,7 @@
 	  components: {
 	    core: {},
 	    block: {},
-	    inline: {
-	      rules: [
-	        'emphasis',
-	        'smallcaps'
-	      ]
-	    }
-
+	    inline: {}
 	  }
 	};
 
@@ -13866,51 +13700,123 @@
 	    },
 
 	    inline: {
-	    }
-	  }
-	};
-
-	var cfg_linguisticas = {
-	  options: {
-	    html: true,
-	    xhtmlOut: true,
-	    breaks: false,
-	    langPrefix: 'language-',
-	    linkify: false,
-	    typographer: true,
-	    quotes: '\u00AB\u00BB\u2018\u2019', /* «»‘’ */
-	    maxNesting: 20
-	  },
-
-	  components: {
-	    core: {},
-	    block: {},
-	    inline: {
 	      rules: [
-	        'text',
-	        'newline',
-	        'escape',
+	        'autolink',
 	        'backticks',
 	        'emphasis',
-	        'link',
-	        'image',
-	        'autolink',
-	        'html_inline',
 	        'entity',
-	        'smallcaps'
+	        'escape',
+	        'html_inline',
+	        'image',
+	        'link',
+	        'newline',
+	        'text'
 	      ],
 	      rules2: [
 	        'balance_pairs',
 	        'emphasis',
-	        'fragments_join',
-	        'smallcaps'
+	        'fragments_join'
 	      ]
 	    }
 	  }
 	};
 
-	// Main parser class
+	var cfg_linguisticas = {
+	    options: {
+	        // Ebligi HTML-etikedojn en fonto
+	        html: false,
 
+	        // Uzi '/' por fermi ununurajn etikedojn (<br />)
+	        xhtmlOut: false,
+
+	        // Konverti '\n'-ojn en alineoj al <br>
+	        breaks: false,
+
+	        // CSS-lingva prefikso por baritaj blokoj
+	        langPrefix: 'language-',
+
+	        // aŭtomate konverti URL-similajn tekstojn al ligiloj
+	        linkify: false,
+
+	        // Ebligi iujn lingvo-neŭtralajn anstataŭigojn + beligadon de citiloj
+	        typographer: true,
+
+	        // Paroj da anstataŭigoj por duoblaj kaj ununuraj citiloj kiam typographer
+	        // estas ebligita kaj inteligentaj citiloj estas ŝaltitaj. Eblas uzi Ĉenon (String) aŭ Tabelon (Array).
+	        //
+	        // Ekzemple, vi povas uzi '«»„“' por la rusa, '„“‚‘' por la germana,
+	        // kaj ['«\xA0', '\xA0»', '‹\xA0', '\xA0›'] por la franca.
+	        quotes: '\u00ab\u00bb\u2018\u2019', /* «»‘’ */
+
+	        // Elstarigilo. Devas redoni eskapitan HTML,
+	        // aŭ '' se la fontĉeno ne estas ŝanĝita kaj devas esti eskapita ekstere.
+	        // Se la rezulto komenciĝas per <pre... la interna ujo estas preterlasita.
+	        //
+	        // function (/*str, lang*/) { return ''; }
+	        //
+	        highlight: null,
+
+	        // Interna protekto, maksimuma profundo de nesto
+	        maxNesting: 100
+	    },
+	    components: {
+	        core: {
+	            rules: [
+	                'normalize',
+	                'block',
+	                'inline',
+	                'linkify',
+	                'replacements',
+	                'smartquotes',
+	                'text_join'
+	                // <-- Ni povas injekti proprajn kernajn regulojn ĉi tie
+	            ]
+	        },
+	        block: {
+	            rules: [
+	                'table',
+	                'code',
+	                'fence',
+	                'blockquote',
+	                'hr',
+	                'list',
+	                'reference',
+	                'html_block',
+	                'heading',
+	                'lheading',
+	                'paragraph'
+	                // <-- Ni povas injekti proprajn blokajn regulojn ĉi tie
+	            ]
+	        },
+	        inline: {
+	            rules: [
+	                'text',
+	                'linkify',
+	                'newline',
+	                'escape',
+	                'backticks',
+	                'strikethrough',
+	                'emphasis',
+	                'smallcaps',
+	                'link',
+	                'image',
+	                'autolink',
+	                'html_inline',
+	                'entity'
+	                // <-- Ni povas injekti proprajn enliniajn regulojn ĉi tie
+	            ],
+	            rules2: [
+	                'balance_pairs',
+	                'strikethrough',
+	                'emphasis',
+	                'smallcaps',
+	                'fragments_join'
+	            ]
+	        }
+	    }
+	};
+
+	// Main parser class
 
 
 	const config = {

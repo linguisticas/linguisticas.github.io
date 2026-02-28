@@ -3,8 +3,6 @@ import hljs from 'highlight.js/lib/core';
 // Languages you already had
 import javascript from 'highlight.js/lib/languages/javascript';
 import cpp from 'highlight.js/lib/languages/cpp';
-
-// New languages
 import xml from 'highlight.js/lib/languages/xml';
 import sql from 'highlight.js/lib/languages/sql';
 import php from 'highlight.js/lib/languages/php';

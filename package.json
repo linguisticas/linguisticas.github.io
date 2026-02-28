@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "rollup -c",
-    "dev": "rollup -c && npx serve ."
+    "dev": "rollup -c && npx serve .",
+    "minify": "rollup -c --environment MINIFY:true"
   },
   "keywords": [],
   "author": "",
@@ -16,7 +17,6 @@
     "highlight.js": "^11.11.1",
     "katex": "^0.16.33",
     "markdown-it": "^14.1.1",
-    "markdown-it-abcmusic": "^0.0.12",
     "markdown-it-emoji": "^3.0.0",
     "markdown-it-footnote": "^4.0.0",
     "markdown-it-katex": "^2.0.3",
@@ -30,6 +30,7 @@
     "@rollup/plugin-commonjs": "^29.0.0",
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^16.0.3",
+    "@rollup/plugin-terser": "^0.4.4",
     "rollup": "^4.59.0",
     "rollup-plugin-import-css": "^4.2.0",
     "rollup-plugin-postcss": "^4.0.2",

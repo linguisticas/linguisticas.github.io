@@ -52,12 +52,41 @@ p {
 pre,
 code,
 pre code {
+    font-family: 'Cascadia Code',
+        'SF Mono',
+        Consolas,
+        'Roboto Mono',
+        'Ubuntu Mono',
+        'Liberation Mono',
+        Menlo,
+        Monaco,
+        'Courier New',
+        monospace;
     white-space: pre-wrap;
     /* preserve whitespace but allow wrapping */
     word-wrap: break-word;
     /* break long words if needed */
     overflow-wrap: break-word;
     /* modern equivalent */
+}
+
+/* Ensure <pre> blocks wrap and don’t overflow */
+pre {
+    max-width: 100%;
+    /* keep within viewport */
+    overflow-x: auto;
+    /* scroll if absolutely necessary */
+    box-sizing: border-box;
+}
+
+/* Make images responsive to screen size */
+img {
+    max-width: 100%;
+    /* scale down to fit container */
+    height: auto;
+    /* preserve aspect ratio */
+    display: block;
+    /* remove inline gaps */
 }
 
 /* Structural elements */
