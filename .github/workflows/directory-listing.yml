@@ -16,7 +16,7 @@ jobs:
       - name: Generate directory listings
         uses: gacts/directory-listing@v1
         with:
-          target: */        # <-- match all first-level subdirectories
+          target: "*/"        # <-- quoted glob pattern
           ignore: |
             node_modules/**
             .github/**
