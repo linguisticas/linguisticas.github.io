@@ -56,3 +56,11 @@ a:focus {
     color: #4de68a;
     /* bright green accent */
 }
+
+.back {
+    background-color: var(--back-bg, #0d0d0d);
+}
+
+.menu-item:hover {
+    background-color: var(--menu-hover, #3f8059);
+}

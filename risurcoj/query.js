@@ -4,25 +4,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let entries = [];
 
-    // Fetch list of files in /eroj/ (expects directory listing)
+    // Elŝutu liston de dosieroj en /eroj/ (atendas dosierliston)
     fetch("eroj/")
         .then(res => res.text())
         .then(text => {
-            // Extract only .md filenames
+            // Elprenu nur dosiernomojn kun finaĵo .md
             const regex = /href="([^"]+\.md)"/g;
             let match;
             while ((match = regex.exec(text)) !== null) {
                 const fullPath = match[1];
-                // Normalize: strip directories, keep only the filename
+                // Normaligu: forigu dosierujojn, konservu nur la dosiernomon
                 const filename = fullPath.split("/").pop().split("\\").pop();
                 entries.push(filename);
             }
         })
         .catch(err => {
-            resultsDiv.innerHTML = "<p style='color:red'>Error loading entries: " + err + "</p>";
+            resultsDiv.innerHTML = "<p style='color:red'>Eraro dum ŝargado de enskriboj: " + err + "</p>";
         });
 
-    // Normalizes strings by removing diacritics (accents)
+    // Normaligas ĉenojn forigante diakritajn signojn (supersignojn)
     function normalizeString(str) {
         return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     }
@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
         resultsDiv.innerHTML = "";
 
         if (!filter || filter.trim() === "") {
-            return; // Clear results when input is empty
+            return; // Vakigu rezultojn kiam enigo estas malplena
         }
 
         const normalizedFilter = normalizeString(filter.toLowerCase());
@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         if (filtered.length === 0) {
-            resultsDiv.innerHTML = "<p>No se encontraron resultados.</p>";
+            resultsDiv.innerHTML = "<p>Neniu rezulto trovita.</p>";
             return;
         }
         const ul = document.createElement("ul");
@@ -50,11 +50,11 @@ document.addEventListener("DOMContentLoaded", () => {
             const li = document.createElement("li");
             const link = document.createElement("a");
 
-            // Show only the filename without extension
+            // Montru nur la dosiernomon sen finaĵo
             const displayName = filename.replace(".md", "");
             link.textContent = displayName;
 
-            // Build clean query string (no .html extension in target)
+            // Konstrui puran demandĉenon (sen .html finaĵo en celo)
             const target = "analizo?file=" + encodeURIComponent(filename);
 
             link.addEventListener("click", e => {
