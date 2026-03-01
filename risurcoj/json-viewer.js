@@ -56,39 +56,21 @@ function renderMenu(entry, container, stack) {
     }
 
     if (Array.isArray(obj)) {
-        // Flatten array elements visually
-        obj.forEach((item) => {
+        obj.forEach((item, index) => {
             if (typeof item === "object" && item !== null) {
-                // Extract keys from object inside array to skip the `[x]` level
-                Object.entries(item).forEach(([key, value]) => {
-                    const div = document.createElement("div");
-                    div.className = "menu-item";
-                    div.textContent = key;
-                    div.onclick = () => {
-                        if (typeof value === "object" && value !== null) {
-                            stack.push({ key, value });
-                            renderMenu(stack[stack.length - 1], container, stack);
-                        } else {
-                            const valDiv = document.createElement("div");
-                            valDiv.className = "menu-item value";
-                            valDiv.textContent = value;
-                            container.innerHTML = "";
-                            container.appendChild(valDiv);
-                            const backBtn = document.createElement("div");
-                            backBtn.className = "back";
-                            backBtn.textContent = "← Volver";
-                            backBtn.onclick = () => {
-                                renderMenu(stack[stack.length - 1], container, stack);
-                            };
-                            container.insertBefore(backBtn, valDiv);
-                        }
-                    };
-                    level.appendChild(div);
-                });
+                const div = document.createElement("div");
+                div.className = "menu-item";
+                // Use parent key from the current entry + 1-based index
+                div.textContent = (index + 1) + ".ª " + entry.key;
+                div.onclick = () => {
+                    stack.push({ key: `${entry.key}[${index}]`, value: item });
+                    renderMenu(stack[stack.length - 1], container, stack);
+                };
+                level.appendChild(div);
             } else {
                 const div = document.createElement("div");
                 div.className = "menu-item value";
-                div.textContent = item;
+                div.textContent = `${index + 1}.º ${entry.key}: ${item}`;
                 level.appendChild(div);
             }
         });
