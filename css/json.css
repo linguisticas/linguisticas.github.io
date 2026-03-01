@@ -1,0 +1,48 @@
+/* Container for each level */
+.menu-level {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+}
+
+/* Each clickable row */
+.menu-item {
+  display: flex;
+  justify-content: space-between;
+  /* text left, chevron right */
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background-color: var(--menu-bg, #f9f9f9);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+/* Chevron indicator */
+.menu-item::after {
+  content: "›";
+  /* right-pointing chevron */
+  font-size: 1.2rem;
+  color: var(--menu-chevron, #666);
+}
+
+/* Value rows (non-clickable) */
+.menu-item.value {
+  justify-content: flex-start;
+}
+
+.menu-item.value::after {
+  content: "";
+  /* no chevron for values */
+}
+
+/* Back button */
+.back {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}

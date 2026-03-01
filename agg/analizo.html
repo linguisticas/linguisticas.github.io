@@ -22,16 +22,17 @@
 
     <!-- Menu styles -->
     <link rel="stylesheet" href="../css/menu.css">
+
+    <!-- JSON viewer styles -->
+    <link rel="stylesheet" href="../css/json.css">
 </head>
 
 <body>
     <header>
-        <h1>Análisis de entrada</h1>
-        <!-- Hamburger button -->
+        <h1>Genética del vocablo</h1>
         <button class="hamburger" aria-label="Open menu">☰</button>
     </header>
 
-    <!-- Overlay and sliding panel -->
     <div class="menu-overlay"></div>
     <nav class="menu-panel">
         <ul>
@@ -42,39 +43,21 @@
 
     <main>
         <div id="md-container">Cargando entrada…</div>
+        <h2>Genética del vocablo</h2>
+        <div id="json-viewer"></div>
     </main>
 
     <footer>
         <p>&copy; 2026 Lingüísticas Project</p>
     </footer>
 
+    <!-- Markdown rendering -->
     <script src="../risurcoj/linguisticas.js"></script>
-    <script>
-        const container = document.getElementById('md-container');
 
-        // Helper: get query parameter
-        function getQueryParam(name) {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get(name);
-        }
+    <!-- JSON viewer logic -->
+    <script src="../risurcoj/json-viewer.js"></script>
 
-        const file = getQueryParam('file');
-        if (file) {
-            fetch('eroj/' + file)
-                .then(res => res.text())
-                .then(md => {
-                    container.innerHTML = window.renderMarkdown(md);
-                })
-                .catch(err => {
-                    container.innerHTML =
-                        "<p style='color:red'>Error loading Markdown: " + err + "</p>";
-                });
-        } else {
-            container.innerHTML = "<p>No se especificó ninguna entrada.</p>";
-        }
-    </script>
-
-    <!-- Standalone JS for hamburger -->
+    <!-- Hamburger menu -->
     <script src="../risurcoj/menu.js"></script>
 </body>
 

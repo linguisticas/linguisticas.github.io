@@ -1,0 +1,26 @@
+{
+    "vocablo": "manzana",
+    "definiciones": [
+        {
+            "definición": "A small domesticated carnivorous mammal.",
+            "morphological": {
+                "number": {
+                    "base": "cat",
+                    "plural": [
+                        "cats",
+                        "asdfasdf",
+                        "asdfasdf"
+                    ]
+                },
+                "gender": "epicene"
+            },
+            "syntacticSemantic": {
+                "type": "common noun, animate",
+                "criteria": {
+                    "canBeSubjectOfVerb": true,
+                    "canBeObjectOfVerb": true
+                }
+            }
+        }
+    ]
+}
