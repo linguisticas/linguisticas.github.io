@@ -1,0 +1,72 @@
+{
+    "acepción DRAE": [
+        {
+            "definición": "Suceso eventual que altera el orden regular de las cosas.",
+            "morfología": {
+                "número": {
+                    "plural": [
+                        "accidentes",
+                        "accidentas"
+                    ]
+                },
+                "género": [
+                    "accidente",
+                    "accidenta"
+                ]
+            },
+            "sintaxis/semántica": {
+                "sustantivo común o propio": "común",
+                "sustantivo eventivo": {
+                    "sujeto de «tener lugar»": true,
+                    "término de la preposición «durante»": true,
+                    "oración copulativa con ser": null
+                }
+            }
+        },
+        {
+            "definición": "Suceso eventual o acción de que resulta daño involuntario para las personas o las cosas.",
+            "morfología": {
+                "número": {
+                    "base": "accidente",
+                    "plural": [
+                        "accidentes"
+                    ]
+                },
+                "género": "masculino"
+            },
+            "sintaxis/semántica": {
+                "sustantivo común o propio": "común",
+                "sustantivo eventivo": {
+                    "sujeto de «tener lugar»": true,
+                    "término de la preposición «durante»": true,
+                    "oración copulativa con ser": true
+                }
+            }
+        }
+    ],
+    "acepción WordReference": [
+        {
+            "definición": "Suceso eventual del que involuntariamente resulta un daño.",
+            "morfología": {
+                "número": {
+                    "plural": [
+                        "accidentes",
+                        "accidentas"
+                    ]
+                },
+                "género": [
+                    "accidente",
+                    "accidenta"
+                ]
+            },
+            "sintaxis/semántica": {
+                "sustantivo común o propio": "común",
+                "sustantivo eventivo": {
+                    "sujeto de «tener lugar»": true,
+                    "término de la preposición «durante»": null,
+                    "oración copulativa con ser": null
+                }
+            }
+        }
+    ]
+}
