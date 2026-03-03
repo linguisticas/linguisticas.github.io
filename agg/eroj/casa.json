@@ -11,16 +11,6 @@
             },
             "sintaxis/semántica": {
                 "NGLE": {
-                    "pluralia tántum": {
-                        "Prueba": null,
-                        "Validez": false,
-                        "Fuente": "12.1l"
-                    },
-                    "singularia tántum": {
-                        "Prueba": "casa",
-                        "Validez": null,
-                        "Fuente": "12.1l"
-                    },
                     "sustantivo común o propio": "común",
                     "sustantivo eventivo": {
                         "sujeto de «tener lugar»": {
@@ -40,6 +30,16 @@
                         }
                     },
                     "sustantivo contable": {
+                        "pluralia tántum": {
+                            "Prueba": null,
+                            "Validez": false,
+                            "Fuente": "12.1l"
+                        },
+                        "singularia tántum": {
+                            "Prueba": "casa",
+                            "Validez": null,
+                            "Fuente": "12.1l"
+                        },
                         "plural con determinante definido": {
                             "Prueba": "las ᴄᴀꜱᴀꜱ",
                             "Validez": true,
@@ -103,12 +103,12 @@
                             "Fuente": "12.3g"
                         },
                         "admite interpretación de clase o tipo": {
-                            "Prueba": "Existen más de cincuenta casas.",
+                            "Prueba": "Existen más de cincuenta ᴄᴀꜱᴀꜱ.",
                             "Validez": null,
                             "Fuente": "12.3i"
                         },
                         "admite interpretación individualizadora": {
-                            "Prueba": "poca casa",
+                            "Prueba": "poca ᴄᴀꜱᴀ",
                             "Validez": false,
                             "Fuente": "12.3j"
                         }
