@@ -4,26 +4,26 @@
             "definición": "Suceso eventual que altera el orden regular de las cosas.",
             "morfología": {
                 "número": {
-                    "singular": "accidente",
-                    "plural": "accidentes"
+                    "singular": "reunión",
+                    "plural": "reuniones"
                 },
-                "género": "masculino"
+                "género": "femenino"
             },
             "sintaxis/semántica": {
                 "NGLE": {
                     "sustantivo común o propio": "común",
                     "sustantivo eventivo": {
                         "sujeto de «tener lugar»": {
-                            "Prueba": "El ᴀᴄᴄɪᴅᴇɴᴛᴇ tuvo lugar.",
+                            "Prueba": "La ʀᴇᴜɴɪóɴ tuvo lugar.",
                             "Validez": true
                         },
                         "término de la preposición «durante»": {
-                            "Prueba": "«durante el ᴀᴄᴄɪᴅᴇɴᴛᴇ»",
+                            "Prueba": "«durante la ʀᴇᴜɴɪóɴ»",
                             "Validez": true
                         },
                         "oración copulativa con «ser»": {
-                            "Prueba": "El ᴀᴄᴄɪᴅᴇɴᴛᴇ es a las cinco.",
-                            "Validez": null
+                            "Prueba": "La ʀᴇᴜɴɪóɴ es a las cinco.",
+                            "Validez": true
                         }
                     }
                 },
