@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Perlas ortográficas</title>
+
+    <!-- Base styles -->
+    <link rel="stylesheet" href="../css/style.css">
+
+    <!-- Theme-specific styles -->
+    <link rel="stylesheet" href="../css/light.css" media="(prefers-color-scheme: light)">
+    <link rel="stylesheet" href="../css/dark.css" media="(prefers-color-scheme: dark)">
+
+    <!-- Syntax highlighting themes -->
+    <link rel="stylesheet" href="../css/github.min.css" media="(prefers-color-scheme: light)">
+    <link rel="stylesheet" href="../css/github-dark.min.css" media="(prefers-color-scheme: dark)">
+
+    <!-- Math -->
+    <link rel="stylesheet" href="../css/katex.css">
+
+    <!-- Menu styles -->
+    <link rel="stylesheet" href="../css/menu.css">
+
+    <!-- Query styles -->
+    <link rel="stylesheet" href="../css/agg.css">
+</head>
+
+<body>
+    <header>
+        <h1>Perlas ortográficas</h1>
+        <!-- Hamburger button -->
+        <button class="hamburger" aria-label="Open menu">☰</button>
+    </header>
+
+    <!-- Overlay and sliding panel -->
+    <div class="menu-overlay"></div>
+    <nav class="menu-panel">
+        <ul>
+            <li><a href="../index.html">Página principal</a></li>
+            <li><a href="#" data-md="../agg/agg.html">Atlas del genoma gramatical</a></li>
+            <li><a href="#" data-md="../perloj/perloj.html">Perlas ortográficas</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <div id="static">
+            <p>Bienvenido a las <i>Perlas ortográficas</i>. Aquí encontrarás ejemplos de tipo A, B y C.</p>
+        </div>
+
+        <!-- Query field -->
+        <div id="query-section">
+            <label for="query-input">Buscar entrada:</label>
+            <input type="text" id="query-input" placeholder="Escribe una palabra clave...">
+            <div id="query-results"></div>
+        </div>
+
+        <div id="md-container">Las mejores perlas ortográficas son las que se usan mucho.</div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Projecto Lingüísticas</p>
+    </footer>
+
+    <script src="../risurcoj/linguisticas.js"></script>
+    <script src="../risurcoj/perloj.js"></script>
+    <script src="../risurcoj/menu.js"></script>
+</body>
+
+</html>
