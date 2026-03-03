@@ -60,7 +60,6 @@ function renderMenu(entry, container, stack) {
             if (typeof item === "object" && item !== null) {
                 const div = document.createElement("div");
                 div.className = "menu-item";
-                // Use parent key from the current entry + 1-based index
                 div.textContent = (index + 1) + ".ª " + entry.key;
                 div.onclick = () => {
                     stack.push({ key: `${entry.key}[${index}]`, value: item });
@@ -70,7 +69,8 @@ function renderMenu(entry, container, stack) {
             } else {
                 const div = document.createElement("div");
                 div.className = "menu-item value";
-                div.textContent = `${index + 1}.º ${entry.key}: ${item}`;
+                const displayValue = item === null ? "Valor aún no establecido." : item;
+                div.textContent = `${index + 1}.º ${entry.key}: ${displayValue}`;
                 level.appendChild(div);
             }
         });
@@ -86,7 +86,7 @@ function renderMenu(entry, container, stack) {
                 } else {
                     const valDiv = document.createElement("div");
                     valDiv.className = "menu-item value";
-                    valDiv.textContent = value;
+                    valDiv.textContent = value === null ? "Valor aún no establecido." : value;
                     container.innerHTML = "";
                     container.appendChild(valDiv);
                     const backBtn = document.createElement("div");

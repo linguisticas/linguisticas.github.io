@@ -1,0 +1,120 @@
+{
+    "acepción XXX": [
+        {
+            "definición": null,
+            "morfología": {
+                "número": {
+                    "singular": "casa",
+                    "plural": "casas"
+                },
+                "género": "femenino"
+            },
+            "sintaxis/semántica": {
+                "NGLE": {
+                    "pluralia tántum": {
+                        "Prueba": null,
+                        "Validez": false,
+                        "Fuente": "12.1l"
+                    },
+                    "singularia tántum": {
+                        "Prueba": "casa",
+                        "Validez": null,
+                        "Fuente": "12.1l"
+                    },
+                    "sustantivo común o propio": "común",
+                    "sustantivo eventivo": {
+                        "sujeto de «tener lugar»": {
+                            "Prueba": "La ᴄᴀꜱᴀ tuvo lugar.",
+                            "Validez": false,
+                            "Fuente": "12.1q"
+                        },
+                        "término de la preposición «durante»": {
+                            "Prueba": "«durante la ᴄᴀꜱᴀ»",
+                            "Validez": false,
+                            "Fuente": "12.1q"
+                        },
+                        "oración copulativa con «ser»": {
+                            "Prueba": "La ᴄᴀꜱᴀ es a las cinco.",
+                            "Validez": null,
+                            "Fuente": "12.1q"
+                        }
+                    },
+                    "sustantivo contable": {
+                        "plural con determinante definido": {
+                            "Prueba": "las ᴄᴀꜱᴀꜱ",
+                            "Validez": true,
+                            "Fuente": "12.2a"
+                        },
+                        "plural con numerales cardinales": {
+                            "Prueba": "tres ᴄᴀꜱᴀꜱ",
+                            "Validez": true,
+                            "Fuente": "12.2a"
+                        },
+                        "plural con indefinidos": {
+                            "Prueba": "muchas ᴄᴀꜱᴀꜱ",
+                            "Validez": true,
+                            "Fuente": "12.2a"
+                        },
+                        "plural con adjetivos": {
+                            "Prueba": "las ᴄᴀꜱᴀꜱ rojas",
+                            "Validez": true,
+                            "Fuente": "12.2a"
+                        },
+                        "sin modificador alguno": {
+                            "Prueba": "ᴄᴀꜱᴀꜱ",
+                            "Validez": true,
+                            "Fuente": "12.2a"
+                        },
+                        "acepta cuantificadores «medio» y «mitad»": {
+                            "con «medio»": {
+                                "Prueba": "media ᴄᴀꜱᴀ",
+                                "Validez": true,
+                                "Fuente": "12.2c"
+                            },
+                            "con «mitad»": {
+                                "Prueba": "la mitad de la ᴄᴀꜱᴀ",
+                                "Validez": true,
+                                "Fuente": "12.2c"
+                            }
+                        },
+                        "plural estilístico": {
+                            "Prueba": "ᴄᴀꜱᴀꜱ",
+                            "Validez": null,
+                            "Fuente": "12.2d"
+                        },
+                        "admite el adjetivo «abundante»": {
+                            "Prueba": "abundante ᴄᴀꜱᴀ",
+                            "Validez": false,
+                            "Fuente": "12.2p"
+                        },
+                        "admite el adjetivo «copioso»": {
+                            "Prueba": "copiosa ᴄᴀꜱᴀ",
+                            "Validez": false,
+                            "Fuente": "12.2q"
+                        },
+                        "es admitido por la preposición «entre»": {
+                            "Prueba": "entre la ᴄᴀꜱᴀ",
+                            "Validez": null,
+                            "Fuente": "12.2t"
+                        },
+                        "admite interpretación cualitativa": {
+                            "Prueba": "Me parece que es mucha ᴄᴀꜱᴀ para ti.",
+                            "Validez": false,
+                            "Fuente": "12.3g"
+                        },
+                        "admite interpretación de clase o tipo": {
+                            "Prueba": "Existen más de cincuenta casas.",
+                            "Validez": null,
+                            "Fuente": "12.3i"
+                        },
+                        "admite interpretación individualizadora": {
+                            "Prueba": "poca casa",
+                            "Validez": false,
+                            "Fuente": "12.3j"
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}
