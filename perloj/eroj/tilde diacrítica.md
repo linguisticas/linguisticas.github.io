@@ -1,15 +1,15 @@
-# Tilde diacrítica
+# La tilde diacrítica
 
 ![Imagen introductoria][intro]
 
 ## Tilde 2
-Cada…
+Esta tilde sirve para
 ### Tilde 3
-… vez…
+diferenciar dos
 #### Tilde 4
-… más…
+palabras
 ##### Tilde 5
-… peque…
+homófonas
 ###### Tilde 6
 … ñito.
 
