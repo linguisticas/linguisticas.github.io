@@ -17,12 +17,7 @@ La tilde diacrítica se utiliza para diferenciar dos palabras homófonas (es dec
 > *Necesito que me dé la carpeta de Antropología Económica.*
 
 
-<<<<<<< HEAD
 Esta tilde, como se habrán dado cuenta, es una excepción a la regla: los monosílabos, tal y como se explica en la _Ortografía de la lengua española_ (publicación de las academias de la lengua y disponible para su consulta gratuita en la ciberpágina de la Real Academia Española), no deben llevar acento gráfico: _fe_ (nunca ⊗_fé_), _vio_ (nunca ⊗_vió_), _ti_ (nunca ⊗_tí_), _guion_ (nunca ⊗_guión_, por ser un monosílabo *a efectos ortográficos*), etcétera. Dicho sea de paso, sea adverbio ('solamente') o adjetivo ('sin compañía), _solo_ no lleva tilde porque siempre es una palabra tónica, luego no cumple la función de la tilde diacrítica: _Solo sé que no sé nada_; _Quiero estar solo_. El _Diccionario panhispánico de dudas_, también de las academias y disponible para su consulta en línea, admite, pero no recomienda, el diacrítico en casos de ambiguedad, que puede deshacerse de manera muy sencilla, por ejemplo cambiando el orden de los constituyentes.
-=======
-Esta tilde, como se habrán dado cuenta, es una excepción a la regla: los monosílabos, tal y como se explica en la *Ortografía de la lengua española* (publicación de las academias de la lengua y disponible para su consulta gratuita en la ciberpágina de la Real Academia Española), no deben llevar acento gráfico: *fe* (nunca ⊗*fé*), *vio* (nunca ⊗*vió*), *ti* (nunca ⊗*tí*), *guion* (nunca ⊗*guión*, por ser un monosílabo **a efectos ortográficos**) etcétera.
 
-Dicho sea de paso, sea adverbio ('solamente') o adjetivo ('sin compañía), *solo* no lleva tilde porque siempre es una palabra tónica, luego no cumple la función de la tilde diacrítica: *Solo sé que no sé nada*; *Quiero estar solo*. El *Diccionario panhispánico de dudas*, también de las academias y disponible para su consulta en línea, admite, pero no recomienda, el diacrítico en casos de ambiguedad, que puede deshacerse de manera muy sencilla, por ejemplo cambiando el orden de los constituyentes.
 
 [intro]: https://www.canva.com/design/DAHDC0_h4oc/dpZtCkzFuLa-t64pBj4-EQ/edit?utm_content=DAHDC0_h4oc&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
->>>>>>> 50c1e047fc33659669ab44427aefc136aa6604a2
