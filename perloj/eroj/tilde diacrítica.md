@@ -24,5 +24,5 @@ Esta tilde, como se habrán dado cuenta, es una excepción a la regla: los monos
 
 Dicho sea de paso, sea adverbio ('solamente') o adjetivo ('sin compañía), *solo* no lleva tilde porque siempre es una palabra tónica, luego no cumple la función de la tilde diacrítica: *Solo sé que no sé nada*; *Quiero estar solo*. El *Diccionario panhispánico de dudas*, también de las academias y disponible para su consulta en línea, admite, pero no recomienda, el diacrítico en casos de ambiguedad, que puede deshacerse de manera muy sencilla, por ejemplo cambiando el orden de los constituyentes.
 
-[intro]: https://www.smartick.es/blog/wp-content/uploads/2023/08/tilde-diacritica-aun-1024x616.jpg "Aun/aún."
+[intro]: https://www.canva.com/design/DAHDC0_h4oc/dpZtCkzFuLa-t64pBj4-EQ/edit?utm_content=DAHDC0_h4oc&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
 >>>>>>> 50c1e047fc33659669ab44427aefc136aa6604a2
