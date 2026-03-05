@@ -1,0 +1,3 @@
+# La escritura de los prefijos
+
+Los prefijos delante de base univerbal, bien, se añaden a él, _superbién; para bases pluriverbales, primer ministro, se añade enfrente de la primera palabra con espacio, ex primer ministro; con cifras, 21, se añade guion sub-21; lo mismo con siglas, OTAN, se mantienen las mayúsculas de la sigla, antiOTAN; con nombres propios, Luis, se añade al nombre propio y este pierde la mayúscula, Megaluís.
