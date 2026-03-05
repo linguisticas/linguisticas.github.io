@@ -2,7 +2,7 @@
 
 ![Imagen introductoria][intro]
 
-La tilde diacrítica se utiliza para diferenciar dos palabras homófonas (es decir, dos voquibles que tienen la misma grafía) donde una es tónica, y la otra, átona, como sucede, por ejemplo, con _sí_ (adverbio de afirmación) y _si_ (conjunción), _té_ (sustantivo) y _te_ (pronombre personal de segunda persona), _mí_ (pronombre de primera persona) y _mi_ (determinante posesivo), etcétera. Algunos ejemplos:
+La tilde diacrítica se utiliza para diferenciar dos palabras homófonas (es decir, dos voquibles que tienen la misma grafía) donde una es tónica, y la otra, átona, como sucede, verbigracia, con _sí_ (adverbio de afirmación) y _si_ (conjunción), _té_ (sustantivo) y _te_ (pronombre personal de segunda persona), _mí_ (pronombre de primera persona) y _mi_ (determinante posesivo), etcétera. Algunos ejemplos:
 
 — ¿Te gustaría tomar un té verde?
 
