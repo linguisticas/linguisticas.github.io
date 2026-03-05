@@ -1,28 +1,5 @@
-# Capaz (que)
+# _Capaz que_ equivale a _tal vez_
 
-![Imagen introductoria][intro]
+En el habla coloquial de muchos países americanos se usa _capaz_ como adverbio de duda con el sentido de 'probablemente' o 'quizá(s)', a menudo en la locución _capaz que_: _Capaz termino enamorándome de ti_; _Capaz que tu marido me amenaza con cortarme la lengua si no le suelto el chisme_; _Capaz que él quiere volver a La Plata a estudiar, no sé_. Es intercambiable por _tal vez_, que cuenta, además, con la grafía simple _talvez_, esta última menos utilizada.
 
-Se utiliza en Argentina y en Colombia.
-
-## Ejemplos
-
-### Ejemplo 1
-
-> — ¿Vas a venir a la fiesta?
-
-> — Capaz.
-
-### Ejemplo 2
-
-> — ¿Vas a venir a la fiesta?
-
-> — Capaz que sí.
-
-Algunos libros de mierda lo registran, pero no sé[^first].
-
-Otros libros lo registran muy mal, che[^second].
-
-[intro]: https://cdn.memegenerator.es/imagenes/memes/thumb/29/46/29468806.jpg  "Meme de «Capaz (que)»."
-
-[^first]: *Libro de mierda 1*, |Autor Mierdoso|, editorial Mierda, 2026, p. 123.
-[^second]: *Libro de mierda 2*, |Autor Mierdoso|, editorial Mierda, 2026, p. 123.
+Se construye, por lo general, con el verbo en indicativo, salvo en Chile, donde la locución se emplea casi exclusivamente con subjuntivo: _Con tanto cacareo se le va a espantar la criatura y capaz que nazca alelada_. En esta construcción, el uso de la preposición _de_ ante la conjunción _que_ es un caso de ᴅᴇǫᴜᴇɪ́ꜱᴍᴏ, de modo que debe evitarse: ⊗‍_Con lo nerviosa que estoy ahora, capaz de que confunda el acelerador con los frenos_; ⊗‍_Capaz de que mañana llueva_; ⊗‍_Capaz de que juegue_ Valorant _con mis amigos_. 
