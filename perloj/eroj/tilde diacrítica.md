@@ -2,17 +2,23 @@
 
 ![Imagen introductoria][intro]
 
-La tilde diacrítica se utiliza para diferenciar dos palabras homófonas (es decir, dos voquibles que tienen la misma grafía) donde una es tónica, y la otra, átona, como sucede, verbigracia, con _sí_ (adverbio de afirmación) y _si_ (conjunción), _té_ (sustantivo) y _te_ (pronombre personal de segunda persona), _mí_ (pronombre de primera persona) y _mi_ (determinante posesivo), etcétera. Algunos ejemplos:
+|Versalitas disponibles|.
 
-— ¿Te gustaría tomar un té verde?
+La tilde diacrítica se utiliza para diferenciar dos palabras homófonas (es decir, dos voquibles que tienen la misma grafía) donde una es tónica, y la otra, átona, como sucede, verbigracia, con *sí* (adverbio de afirmación) y *si* (conjunción), *té* (sustantivo) y *te* (pronombre personal de segunda persona), *mí* (pronombre de primera persona) y *mi* (determinante posesivo), etcétera. Algunos ejemplos:
 
-— Si te digo que estará la chica que te gusta, sí aceptarás la invitación, ¿verdad?
+> *¿Te gustaría tomar un té verde?*
 
-— Sé rompió el televisor, pero no te preocupes: yo sé cómo arreglarlo.
+> *Si te digo que estará la chica que te gusta, sí aceptarás la invitación, ¿verdad?*
 
-— Él habló con el cartero.
+> *Sé rompió el televisor, pero no te preocupes: yo sé cómo arreglarlo.*
 
-— Necesito que me dé la carpeta de Antropología Económica.
+> *Él habló con el cartero.*
+
+> *Necesito que me dé la carpeta de Antropología Económica.*
 
 
-Esta tilde, como se habrán dado cuenta, es una excepción a la regla: los monosílabos, tal y como se explica en la _Ortografía de la lengua española_ (publicación de las academias de la lengua y disponible para su consulta gratuita en la ciberpágina de la Real Academia Española), no deben llevar acento gráfico: _fe_ (nunca ⊗_fé_), _vio_ (nunca ⊗_vió_), _ti_ (nunca ⊗_tí_), _guion_ (nunca ⊗_guión_, por ser un monosílabo *a efectos ortográficos*) etcétera. Dicho sea de paso, sea adverbio ('solamente') o adjetivo ('sin compañía), _solo_ no lleva tilde porque siempre es una palabra tónica, luego no cumple la función de la tilde diacrítica: _Solo sé que no sé nada_; _Quiero estar solo_. El _Diccionario panhispánico de dudas_, también de las academias y disponible para su consulta en línea, admite, pero no recomienda, el diacrítico en casos de ambiguedad, que puede deshacerse de manera muy sencilla, por ejemplo cambiando el orden de los constituyentes.
+Esta tilde, como se habrán dado cuenta, es una excepción a la regla: los monosílabos, tal y como se explica en la *Ortografía de la lengua española* (publicación de las academias de la lengua y disponible para su consulta gratuita en la ciberpágina de la Real Academia Española), no deben llevar acento gráfico: *fe* (nunca ⊗*fé*), *vio* (nunca ⊗*vió*), *ti* (nunca ⊗*tí*), *guion* (nunca ⊗*guión*, por ser un monosílabo **a efectos ortográficos**) etcétera.
+
+Dicho sea de paso, sea adverbio ('solamente') o adjetivo ('sin compañía), *solo* no lleva tilde porque siempre es una palabra tónica, luego no cumple la función de la tilde diacrítica: *Solo sé que no sé nada*; *Quiero estar solo*. El *Diccionario panhispánico de dudas*, también de las academias y disponible para su consulta en línea, admite, pero no recomienda, el diacrítico en casos de ambiguedad, que puede deshacerse de manera muy sencilla, por ejemplo cambiando el orden de los constituyentes.
+
+[intro]: https://www.smartick.es/blog/wp-content/uploads/2023/08/tilde-diacritica-aun-1024x616.jpg "Aun/aún."
